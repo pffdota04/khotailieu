@@ -1,0 +1,16 @@
+$primary-color: #64ff00;
+
+:export {
+  primaryColor: $primary-color;
+}
+
+.home_hero {
+  background-image: url(./../assets/images/homehero.jpg);
+  height: 100vh;
+  overflow: hidden;
+  background-size: cover;
+}
+
+.home_herosearch {
+  color: white
+}

@@ -1,0 +1,13 @@
+.search {
+  background-image: url(./../assets/images/bg-repeat3.png);
+  overflow: hidden;
+  background-size: 200px;
+  background-repeat: repeat;
+  min-height: calc(100vh);
+}
+
+@mixin searchNameCard {
+  .search__namecard {
+    margin-left: 10px;
+  }
+}
