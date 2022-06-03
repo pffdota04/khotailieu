@@ -26,8 +26,6 @@ export default function IndexPage() {
     setCategory(event.target.value);
   };
   const searchHanlder = (event) => {
-    console.log(event.target.value);
-    console.log(event.key);
     if (event.key === "Enter") {
       if (event.target.value == "") alert("Nhập vào trống!");
       else
