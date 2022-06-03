@@ -13,6 +13,7 @@ import variables from "./../styles/Home.module.scss";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import Router from "next/router";
+import { alpha } from "@mui/material";
 
 export default function IndexPage() {
   const [type, setType] = useState("all");
@@ -40,12 +41,19 @@ export default function IndexPage() {
     }
   };
   return (
-    <div>
+    <div style={{ background: "#000000" }}>
       <Box
-        className={variables.home_hero}
+        className={
+          variables.home_hero +
+          " " +
+          (onActive ? variables.home_hero__active : "")
+        }
+      ></Box>
+      <Box
         display="flex"
         alignItems="center"
         justifyContent="center"
+        className={variables.home_centerBox}
       >
         <Box
           sx={{

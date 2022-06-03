@@ -39,6 +39,6 @@ export default function personHandler(req, res) {
   } else {
     res
       .status(404)
-      .json({ message: `Your search with keyword: ${searchkey} not found.` });
+      .json({ message: `Your search with keyword: ${keyword} not found.` });
   }
 }

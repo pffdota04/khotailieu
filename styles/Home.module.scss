@@ -4,13 +4,30 @@ $primary-color: #64ff00;
   primaryColor: $primary-color;
 }
 
+@mixin bgFaded {
+  opacity: 0.5;
+}
 .home_hero {
   background-image: url(./../assets/images/homehero.jpg);
   height: 100vh;
   overflow: hidden;
   background-size: cover;
+  &__active {
+    @include bgFaded;
+  }
+  transition: all 1s;
+}
+
+
+.home_centerBox {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 
 .home_herosearch {
-  color: white
+  color: white;
 }

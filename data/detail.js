@@ -3,12 +3,16 @@ export const detail = [
     id: "1",
     data: [
       {
-        name: "linkdrive",
+        type: "drive",
+        desc: "link drive all",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
+        status: false,
       },
       {
-        name: "video demo",
+        desc: "link youtube",
+        type: "youtube",
         link: "https://www.youtube.com/watch?v=YQ1vN_91KO0",
+        status: true,
       },
     ],
   },
@@ -16,8 +20,10 @@ export const detail = [
     id: "2",
     data: [
       {
-        name: "linkdrive",
+        desc: "File word, bản vẽ",
+        type: "drive",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
+        status: true,
       },
     ],
   },
@@ -25,7 +31,9 @@ export const detail = [
     id: "3",
     data: [
       {
-        name: "linkdrive",
+        desc: "link drive all",
+        type: "drive",
+        status: true,
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
       },
     ],
@@ -34,7 +42,9 @@ export const detail = [
     id: "4",
     data: [
       {
-        name: "linkdrive",
+        status: true,
+        type: "drive",
+        desc: "link drive all",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
       },
     ],
@@ -43,7 +53,9 @@ export const detail = [
     id: "5",
     data: [
       {
-        name: "linkdrive",
+        status: true,
+        type: "drive",
+        desc: "link drive all",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
       },
     ],
@@ -52,7 +64,9 @@ export const detail = [
     id: "6",
     data: [
       {
-        name: "linkdrive",
+        status: true,
+        type: "drive",
+        desc: "link drive all",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
       },
     ],
@@ -61,15 +75,21 @@ export const detail = [
     id: "7",
     data: [
       {
-        name: "linkdrive",
+        status: false,
+        type: "drive",
+        desc: "File word",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
       },
       {
-        name: "youtube demo",
+        status: true,
+        type: "youtube demo",
+        desc: "link demo",
         link: "https://www.youtube.com/watch?v=YQ1vN_91KO0",
       },
       {
-        name: "github",
+        status: true,
+        type: "github",
+        desc: "link github",
         link: "https://github.com/NeymarL/ChineseChess-AlphaZero",
       },
     ],
@@ -78,7 +98,8 @@ export const detail = [
     id: "8",
     data: [
       {
-        name: "linkdrive",
+        status: true,
+        type: "drive",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
       },
     ],
@@ -87,7 +108,9 @@ export const detail = [
     id: "9",
     data: [
       {
-        name: "linkdrive",
+        status: true,
+        type: "drive",
+        desc: "link drive all",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
       },
     ],
@@ -96,7 +119,9 @@ export const detail = [
     id: "10",
     data: [
       {
-        name: "linkdrive",
+        status: true,
+        type: "drive",
+        desc: "link drive all",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
       },
     ],
@@ -105,7 +130,9 @@ export const detail = [
     id: "11",
     data: [
       {
-        name: "linkdrive",
+        status: true,
+        type: "drive",
+        desc: "link drive all",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
       },
     ],
@@ -114,7 +141,9 @@ export const detail = [
     id: "12",
     data: [
       {
-        name: "linkdrive",
+        status: true,
+        type: "drive",
+        desc: "link drive all",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
       },
     ],
@@ -123,7 +152,9 @@ export const detail = [
     id: "13",
     data: [
       {
-        name: "linkdrive",
+        type: "drive",
+        status: true,
+        desc: "link drive all",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
       },
     ],
@@ -132,8 +163,10 @@ export const detail = [
     id: "14",
     data: [
       {
-        name: "linkdrive",
+        type: "drive",
+        desc: "link drive all",
         link: "https://drive.google.com/file/d/1fX6P9UW-2wD5KTdXNrigKWLGxYT3KGo3/view?usp=sharing",
+        status: true,
       },
     ],
   },

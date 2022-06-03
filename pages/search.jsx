@@ -1,8 +1,6 @@
 import {
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   Chip,
   Grid,
@@ -11,10 +9,7 @@ import {
   TextField,
   Typography,
   CardActionArea,
-  Badge,
 } from "@mui/material";
-import Link from "next/link";
-import FaceIcon from "@mui/icons-material/Face";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -35,39 +30,6 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import FilePresentIcon from "@mui/icons-material/FilePresent";
 import PhotoIcon from "@mui/icons-material/Photo";
 
-export async function getServerSideProps(context) {
-  const a = context.query;
-  console.log(a);
-  try {
-    const searchResulf = await axios.get(
-      `http://localhost:3000/api/search?keyword=` +
-        a.keyword.toLowerCase() +
-        `&type=` +
-        a.type +
-        `&category=` +
-        a.category
-    );
-    return {
-      props: {
-        searchResulf: searchResulf.data,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        searchResulf: null,
-      },
-    };
-  }
-}
-
-const convertType = {
-  project: "Đồ án",
-  exam: "Đề thi",
-  docs: "Tài liệu",
-  report: "Tiểu luận",
-};
 export default function Search(props) {
   const { keyword, type, category } = useRouter().query;
   const [selectType, setType] = useState(type);
@@ -75,6 +37,12 @@ export default function Search(props) {
   const [selectCategory, setCategory] = useState(category);
   const [data, setData] = useState([]);
   const [searchFor, setSearchFor] = useState(keyword);
+  const convertType = {
+    project: "Đồ án",
+    exam: "Đề thi",
+    docs: "Tài liệu",
+    report: "Tiểu luận",
+  };
 
   useEffect(() => {
     console.log(props);
@@ -111,7 +79,7 @@ export default function Search(props) {
     else
       try {
         const searchResulf = await axios.get(
-          `http://localhost:3000/api/search?keyword=` +
+          `https://hcmute.netlify.app/api/search?keyword=` +
             value.toLowerCase() +
             `&type=` +
             selectType +
@@ -331,4 +299,30 @@ export default function Search(props) {
       </Container>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const a = context.query;
+  try {
+    const searchResulf = await axios.get(
+      `https://hcmute.netlify.app/api/search?keyword=` +
+        a.keyword.toLowerCase() +
+        `&type=` +
+        a.type +
+        `&category=` +
+        a.category
+    );
+    return {
+      props: {
+        searchResulf: searchResulf.data,
+      },
+    };
+  } catch (error) {
+    console.error("error");
+    return {
+      props: {
+        searchResulf: null,
+      },
+    };
+  }
 }
