@@ -1,6 +1,7 @@
 import "./../styles/global.css";
 import Header from "../components/Header/Header";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { config } from "./../services/firebase";
 
 export default function MyApp({ Component, pageProps }) {
   const theme = createTheme({
