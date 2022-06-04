@@ -16,19 +16,10 @@ import axios from "axios";
 import Router from "next/router";
 import { Container } from "@mui/system";
 import style from "./../styles/Search.module.scss";
-import StickyNote2Icon from "@mui/icons-material/StickyNote2";
-import QuizIcon from "@mui/icons-material/Quiz";
-import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import ArticleIcon from "@mui/icons-material/Article";
-import ListItemIcon from "@mui/material/ListItemIcon";
+import CardItem from "../components/CardItem/Card";
 
-import ChromeReaderModeIcon from "@mui/icons-material/ChromeReaderMode";
-import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
-import SlideshowIcon from "@mui/icons-material/Slideshow";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import FilePresentIcon from "@mui/icons-material/FilePresent";
-import PhotoIcon from "@mui/icons-material/Photo";
+import Image from "next/image";
+import Hori1 from "./../assets/images/hori.png";
 
 export default function Search(props) {
   const { keyword, type, category } = useRouter().query;
@@ -37,21 +28,11 @@ export default function Search(props) {
   const [selectCategory, setCategory] = useState(category);
   const [data, setData] = useState([]);
   const [searchFor, setSearchFor] = useState(keyword);
-  const convertType = {
-    project: "Đồ án",
-    exam: "Đề thi",
-    docs: "Tài liệu",
-    report: "Tiểu luận",
-  };
 
   useEffect(() => {
     console.log(props);
     if (props.searchResulf == null) {
       alert("Không tìm thấy");
-
-      //   Router.push({
-      //     pathname: "/",
-      //   });
     } else {
       setData(props.searchResulf);
     }
@@ -86,6 +67,14 @@ export default function Search(props) {
             `&category=` +
             selectCategory
         );
+        Router.push({
+          pathname: "/search",
+          query: {
+            keyword: value,
+            type: selectType,
+            category: selectCategory,
+          },
+        });
         setData(searchResulf.data);
       } catch (error) {
         console.error(error);
@@ -94,39 +83,6 @@ export default function Search(props) {
     setSearchFor(value);
   };
 
-  const renderIcon = (icon) => {
-    return (
-      <ListItemIcon sx={{ minWidth: 28 }}>
-        {icon == 0 ? (
-          <StickyNote2Icon color="primary" />
-        ) : icon == 1 ? (
-          <QuizIcon color="primary" />
-        ) : icon == 2 ? (
-          <AccountTreeIcon color="primary" />
-        ) : (
-          <ArticleIcon color="primary" />
-        )}
-      </ListItemIcon>
-    );
-  };
-
-  const renderTypeIcon = (icon) => {
-    return icon.includes("word") ? (
-      <ChromeReaderModeIcon />
-    ) : icon.includes("powerpoint") ? (
-      <SlideshowIcon />
-    ) : icon.includes("demo") ? (
-      <OndemandVideoIcon />
-    ) : icon.includes("Github") ? (
-      <GitHubIcon />
-    ) : icon.includes("pdf") ? (
-      <PictureAsPdfIcon />
-    ) : icon.includes("nh chụp") ? (
-      <PhotoIcon />
-    ) : (
-      <FilePresentIcon />
-    );
-  };
   return (
     <div style={{ paddingTop: "66px" }} className={style.search}>
       <Box textAlign="center">
@@ -213,89 +169,50 @@ export default function Search(props) {
         </Grid>
       </Container>
       <Container maxWidth="xl" disableGutters sx={{ p: 1 }}>
-        <Box sx={{ width: "100%" }}>
-          <Stack spacing={2}>
-            {data.length > 0 ? (
-              data.map((e) => (
-                <Card
-                  variant="elevation"
-                  color="primary"
-                  sx={{
-                    opacity: 0.85,
-                    boxShadow: 3,
-                    "&:hover": {
-                      opacity: 1,
-                      backgroundColor: "#e8e8e8",
-                    },
-                  }}
-                >
-                  <CardActionArea
-                    onClick={() => {
-                      Router.push({
-                        pathname: "/detail/" + e.id,
-                      });
-                    }}
+        <Grid container spacing={2}>
+            <Grid item xs={2} alignItems="center" sx={{
+            display: { xs: "none", md: "block" } 
+          }}>
+            <Image
+              alt="Vercel logo"
+              src={Hori1}
+              sx={{ maxWidth: "100%", height: "auto" }}
+            />
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Box sx={{ width: "100%" }}>
+              <Stack spacing={2}>
+                {data.length > 0 ? (
+                  data.map((e) => <CardItem item={e} />)
+                ) : (
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                    component="div"
+                    textAlign="center"
+                    backgroundColor="primary"
                   >
-                    <CardContent>
-                      <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          gutterBottom
-                          color="primary"
-                        >
-                          {renderIcon(Object.keys(convertType).indexOf(e.type))}
-                          {convertType[e.type]}
-                        </Typography>
-                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                          {e.major}
-                        </Typography>
-                      </Stack>
-                      <Typography variant="h5" component="div">
-                        {e.name}
-                      </Typography>
-                      <Typography sx={{ fontSize: 15 }} component="div">
-                        Upload by: {e.author} | Upload day: {e.date}
-                      </Typography>
-
-                      <Typography variant="body2">
-                        Bao gồm:{" "}
-                        {e.include.map((e) => (
-                          <Chip icon={renderTypeIcon(e)} label={e} />
-                        ))}
-                      </Typography>
-                    </CardContent>
-
-                    {/* <CardActions
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Button size="small" variant="outlined" color="primary">
-                      Xem Chi Tiết
-                    </Button>
-                  </CardActions> */}
-                  </CardActionArea>
-                </Card>
-              ))
-            ) : (
-              <Typography
-                variant="h4"
-                gutterBottom
-                component="div"
-                textAlign="center"
-                backgroundColor="primary"
-              >
-                Không tìm thấy
-              </Typography>
-            )}
-          </Stack>
-        </Box>
+                    Không tìm thấy
+                  </Typography>
+                )}
+              </Stack>
+            </Box>
+          </Grid>
+          <Grid item xs={2} alignItems="center" sx={{
+            display: { xs: "none", md: "block" } 
+          }}>
+            <Image
+              alt="Vercel logo"
+              src={Hori1}
+              sx={{
+                maxWidth: "100%",
+                height: "auto",
+                
+              }}
+              style={{ transform: "scaleX(-1)"}}
+            />
+          </Grid>
+        </Grid>
       </Container>
     </div>
   );

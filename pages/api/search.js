@@ -1,5 +1,9 @@
 import { info } from "../../data/info";
-export default function personHandler(req, res) {
+import runMiddleware from "./../../lib/cors";
+
+export default async function personHandler(req, res) {
+  await runMiddleware(req, res, ["GET", "HEAD"]);
+
   const { keyword, type, category } = req.query;
   let filtered = [];
   if (

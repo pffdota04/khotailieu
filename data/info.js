@@ -137,7 +137,7 @@ export const info = [
     id: "12",
     name: "Tóm tắt kiến thức Toán 3",
     type: "docs",
-    major: "Toán",
+    major: "Khoa học ứng dụng",
     date: "2022",
     keywork: "tóm tắt kiến thức toán 3 ngoại binh quốc",
     include: ["Ảnh chụp"],
