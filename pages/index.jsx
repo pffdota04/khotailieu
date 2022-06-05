@@ -1,19 +1,8 @@
-import {
-  Box,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Box, Grid, MenuItem, TextField } from "@mui/material";
 import Link from "next/link";
 import variables from "./../styles/Home.module.scss";
-import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import Router from "next/router";
-import { alpha } from "@mui/material";
 
 export default function IndexPage() {
   const [type, setType] = useState("all");
@@ -40,6 +29,7 @@ export default function IndexPage() {
         });
     }
   };
+
   return (
     <div style={{ background: "#000000" }}>
       <Box

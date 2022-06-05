@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Container,
-  Drawer,
   IconButton,
   List,
   ListItem,
@@ -13,13 +12,11 @@ import {
   Toolbar,
   Typography,
   Divider,
-  Tooltip,
   Avatar,
 } from "@mui/material";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import AutoStoriesSharpIcon from "@mui/icons-material/AutoStoriesSharp";
-import MenuSharpIcon from "@mui/icons-material/MenuSharp";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
@@ -28,7 +25,8 @@ import QuizIcon from "@mui/icons-material/Quiz";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import PaidIcon from "@mui/icons-material/Paid";
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
+import { auth } from "../../services/firebase";
 import "../../services/firebase";
 import Link from "next/link";
 import Router from "next/router";
@@ -36,7 +34,6 @@ import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 
 const pages = ["Tài liệu", "Đề thi", "Đồ án", "Tiểu luận", "Donate"];
-const getauth = getAuth();
 export default function Header(props) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -44,11 +41,11 @@ export default function Header(props) {
   const [user, setUser] = React.useState(undefined);
 
   useEffect(() => {
-    getauth.onAuthStateChanged((currentUser) => {
+    auth.onAuthStateChanged((currentUser) => {
       console.log(currentUser);
       setUser(currentUser);
     });
-  }, [getauth]);
+  }, [auth]);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -73,7 +70,7 @@ export default function Header(props) {
   };
 
   const Logout = () => {
-    signOut(getauth)
+    signOut(auth)
       .then(() => {
         alert("OUT");
       })

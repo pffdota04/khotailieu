@@ -13,6 +13,8 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import ArticleIcon from "@mui/icons-material/Article";
 import ListItemIcon from "@mui/material/ListItemIcon";
 
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
 import ChromeReaderModeIcon from "@mui/icons-material/ChromeReaderMode";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
@@ -21,6 +23,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import FilePresentIcon from "@mui/icons-material/FilePresent";
 import PhotoIcon from "@mui/icons-material/Photo";
 import Router from "next/router";
+import MyChip from "./../Chip/Chip";
 
 const CardItem = ({ item }) => {
   const convertType = {
@@ -90,7 +93,16 @@ const CardItem = ({ item }) => {
           >
             <Typography sx={{ fontSize: 14 }} gutterBottom color="primary">
               {renderIcon(Object.keys(convertType).indexOf(item.type))}
-              {convertType[item.type]}
+              {convertType[item.type]} ({item.view}{" "}
+              <VisibilityIcon
+                sx={{
+                  width: 22,
+                  height: 15,
+                  marginBottom: "-3px",
+                  marginLeft: "-5px",
+                }}
+              />
+              )
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {item.major}
@@ -99,14 +111,20 @@ const CardItem = ({ item }) => {
           <Typography variant="h5" component="div">
             {item.name}
           </Typography>
-          <Typography sx={{ fontSize: 15 }} component="div">
-            Upload by: {item.author} | Upload day: {item.date}
+          <Typography
+            sx={{ fontSize: 15 }}
+            display="inline-block"
+            marginRight={1}
+          >
+            Upload by: {item.author}
           </Typography>
+          <Typography display="inline-block">({item.date})</Typography>
 
           <Typography variant="body2">
             Bao gồm:{" "}
             {item.include.map((e) => (
-              <Chip icon={renderTypeIcon(e)} label={e} />
+              // <Chip icon={renderTypeIcon(e)} label={e} sx={{ m: "1px" }} />
+              <MyChip type={e} sx={{ m: "1px" }} />
             ))}
           </Typography>
         </CardContent>

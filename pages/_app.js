@@ -2,6 +2,24 @@ import "./../styles/global.css";
 import Header from "../components/Header/Header";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { config } from "./../services/firebase";
+import NProgress from "nprogress";
+import Router from "next/router";
+import "./../styles/nprocess.css";
+
+Router.onRouteChangeStart = () => {
+  console.log(0);
+  NProgress.start();
+};
+
+Router.onRouteChangeComplete = () => {
+  console.log(1);
+  NProgress.done();
+};
+
+Router.onRouteChangeError = () => {
+  console.log(2);
+  NProgress.done();
+};
 
 export default function MyApp({ Component, pageProps }) {
   const theme = createTheme({

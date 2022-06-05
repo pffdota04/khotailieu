@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
 import Router from "next/router";
 import {
-  getAuth,
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
+
+import { auth} from "../services/firebase";
 const provider = new GoogleAuthProvider();
-const getauth = getAuth();
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -18,7 +18,7 @@ const Login = () => {
   const [count, setCounte] = useState(0);
 
   useEffect(() => {
-    getauth.onAuthStateChanged((currentUser) => {
+    auth.onAuthStateChanged((currentUser) => {
       console.log(currentUser);
       if (currentUser !== null)
         currentUser
@@ -33,7 +33,7 @@ const Login = () => {
   });
 
   const Login = () => {
-    signInWithPopup(getauth, provider)
+    signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;

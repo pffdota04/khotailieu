@@ -36,6 +36,7 @@ export default function Search(props) {
     } else {
       setData(props.searchResulf);
     }
+    console.log("ONLY ONE");
   }, []);
 
   useEffect(() => {
@@ -59,14 +60,6 @@ export default function Search(props) {
     if (value == "") alert("Nhập vào trống!");
     else
       try {
-        const searchResulf = await axios.get(
-          `https://hcmute.netlify.app/api/search?keyword=` +
-            value.toLowerCase() +
-            `&type=` +
-            selectType +
-            `&category=` +
-            selectCategory
-        );
         Router.push({
           pathname: "/search",
           query: {
@@ -75,6 +68,14 @@ export default function Search(props) {
             category: selectCategory,
           },
         });
+        const searchResulf = await axios.get(
+          `https://hcmute.netlify.app/api/search?keyword=` +
+            value.toLowerCase() +
+            `&type=` +
+            selectType +
+            `&category=` +
+            selectCategory
+        );
         setData(searchResulf.data);
       } catch (error) {
         console.error(error);
@@ -170,9 +171,14 @@ export default function Search(props) {
       </Container>
       <Container maxWidth="xl" disableGutters sx={{ p: 1 }}>
         <Grid container spacing={2}>
-            <Grid item xs={2} alignItems="center" sx={{
-            display: { xs: "none", md: "block" } 
-          }}>
+          <Grid
+            item
+            xs={2}
+            alignItems="center"
+            sx={{
+              display: { xs: "none", md: "block" },
+            }}
+          >
             <Image
               alt="Vercel logo"
               src={Hori1}
@@ -198,18 +204,22 @@ export default function Search(props) {
               </Stack>
             </Box>
           </Grid>
-          <Grid item xs={2} alignItems="center" sx={{
-            display: { xs: "none", md: "block" } 
-          }}>
+          <Grid
+            item
+            xs={2}
+            alignItems="center"
+            sx={{
+              display: { xs: "none", md: "block" },
+            }}
+          >
             <Image
               alt="Vercel logo"
               src={Hori1}
               sx={{
                 maxWidth: "100%",
                 height: "auto",
-                
               }}
-              style={{ transform: "scaleX(-1)"}}
+              style={{ transform: "scaleX(-1)" }}
             />
           </Grid>
         </Grid>
