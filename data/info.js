@@ -42,7 +42,7 @@ export const info = [
     type: "exam",
     major: "Khoa học ứng dụng",
     date: "2018",
-    keywork: "đề thi Toán 2 2018 trịnh xuân xanh",
+    keywork: "đề thi toán 2 2018 trịnh xuân xanh",
     include: ["File pdf"],
     status: "Ok",
     view: 232,

@@ -13,6 +13,7 @@ import {
   Typography,
   Divider,
   Avatar,
+  Drawer,
 } from "@mui/material";
 import * as React from "react";
 import { useState, useEffect } from "react";
@@ -32,6 +33,7 @@ import Link from "next/link";
 import Router from "next/router";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import MenuSharpIcon from "@mui/icons-material/MenuSharp";
 
 const pages = ["Tài liệu", "Đề thi", "Đồ án", "Tiểu luận", "Donate"];
 export default function Header(props) {
@@ -48,11 +50,15 @@ export default function Header(props) {
   }, [auth]);
 
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorElUser(event);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleOpenNavMenu = () => {
+    setAnchorElNav(true);
   };
 
   const handleCloseUserMenu = () => {
@@ -94,6 +100,7 @@ export default function Header(props) {
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
+      disablePadding
     >
       <List>
         {pages.map((text, index) => (
@@ -122,35 +129,33 @@ export default function Header(props) {
   );
 
   return (
-    <React.Fragment>
-      <AppBar position="fixed">
-        <Container maxWidth={false}>
-          <Toolbar disableGutters>
-            <AutoStoriesSharpIcon
-              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            />
-            <Typography
-              variant="h5"
-              noWrap
-              sx={{
-                display: { xs: "none", md: "flex" },
-                flexGrow: 1,
-              }}
-            >
-              <Link href="/">
-                <a href="/">
-                  <Typography
-                    sx={{
-                      color: "grey.light",
-                    }}
-                  >
-                    KhoTaiLieux
-                  </Typography>
-                </a>
-              </Link>
-            </Typography>
-
-            {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+    <AppBar position="fixed" sx={{ width: "100%" }}>
+      <Container maxWidth={false}>
+        <Toolbar disableGutters>
+          <AutoStoriesSharpIcon
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+          />
+          <Typography
+            variant="h5"
+            noWrap
+            sx={{
+              display: { xs: "none", md: "flex" },
+              flexGrow: 1,
+            }}
+          >
+            <Link href="/">
+              <a href="/">
+                <Typography
+                  sx={{
+                    color: "grey.light",
+                  }}
+                >
+                  KhoTaiLieux
+                </Typography>
+              </a>
+            </Link>
+          </Typography>
+          {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page, i) => (
                 <Button
                   key={page}
@@ -163,221 +168,169 @@ export default function Header(props) {
                 </Button>
               ))}
             </Box> */}
-
-            <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
-              {user === undefined ? (
-                <HourglassBottomIcon />
-              ) : user === null ? (
-                <Typography
-                  textAlign="center"
-                  sx={{
-                    my: 2,
-                    color: "white",
-                    display: "block",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    Router.push({
-                      pathname: "/login",
-                    })
-                  }
-                >
-                  Login
-                </Typography>
-              ) : (
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={user.displayName} src={user.photoURL} />
-                </IconButton>
-              )}
-
-              {user === undefined ? (
-                ""
-              ) : user === null ? (
-                ""
-              ) : (
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  <MenuItem>
-                    <Typography textAlign="center">
-                      {user.displayName}
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={() => Logout()}>
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
-                </Menu>
-              )}
-            </Box>
-
-            {/* MOBLIE */}
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              {/* <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={toggleDrawer(true)}
-                color="inherit"
-              >
-                <MenuSharpIcon />
-              </IconButton> */}
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
+          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+            {user === undefined ? (
+              <HourglassBottomIcon />
+            ) : user === null ? (
+              <Typography
+                textAlign="center"
                 sx={{
-                  display: { xs: "block", md: "none" },
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  cursor: "pointer",
                 }}
+                onClick={() =>
+                  Router.push({
+                    pathname: "/login",
+                  })
+                }
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
+                Login
+              </Typography>
+            ) : (
+              <IconButton
+                onClick={() => handleOpenUserMenu(true)}
+                sx={{ p: 0 }}
+              >
+                <Avatar alt={user.displayName} src={user.photoURL} />
+              </IconButton>
+            )}
+          </Box>
 
-            <AutoStoriesSharpIcon
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            />
-
-            <Typography
-              variant="h5"
-              noWrap
+          {/* MOBLIE */}
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            {/* <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar2"
+              aria-haspopup="true"
+              onClick={toggleDrawer(true)}
+              color="inherit"
+            >
+              <MenuSharpIcon />
+            </IconButton> */}
+            <Menu
+              id="menu-appbar2"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "flex", md: "none" },
-                flexGrow: 1,
+                display: { xs: "block", md: "none" },
               }}
             >
-              <Link href="/">
-                <a href="/">
-                  <Typography
-                    sx={{
-                      color: "grey.light",
-                    }}
-                  >
-                    KhoTaiLieux
-                  </Typography>
-                </a>
-              </Link>
-            </Typography>
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
 
-            <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
-              {user === undefined ? (
-                <HourglassBottomIcon />
-              ) : user === null ? (
+          <AutoStoriesSharpIcon
+            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+          />
+
+          <Typography
+            variant="h5"
+            noWrap
+            sx={{
+              display: { xs: "flex", md: "none" },
+              flexGrow: 1,
+            }}
+          >
+            <Link href="/">
+              <a href="/">
                 <Typography
-                  textAlign="center"
                   sx={{
-                    my: 2,
-                    color: "white",
-                    display: "block",
-                    cursor: "pointer",
+                    color: "grey.light",
                   }}
-                  onClick={() =>
-                    Router.push({
-                      pathname: "/login",
-                    })
-                  }
                 >
-                  Login
+                  KhoTaiLieux
                 </Typography>
-              ) : (
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={user.displayName} src={user.photoURL} />
-                </IconButton>
-              )}
+              </a>
+            </Link>
+          </Typography>
 
-              {user === undefined ? (
-                ""
-              ) : user === null ? (
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
+          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+            {user === undefined ? (
+              <HourglassBottomIcon />
+            ) : user === null ? (
+              <Typography
+                textAlign="center"
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  cursor: "pointer",
+                }}
+                onClick={() =>
+                  Router.push({
+                    pathname: "/login",
+                  })
+                }
+              >
+                Login
+              </Typography>
+            ) : (
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt={user.displayName} src={user.photoURL} />
+              </IconButton>
+            )}
+          </Box>
+
+          {user && (
+            <Menu
+              sx={{ mt: "45px", rigth: "50px" }}
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <MenuItem>
+                <Typography textAlign="center">{user.displayName}</Typography>
+              </MenuItem>
+              <Link href="/share">
+                <a href="/share">
                   <MenuItem>
                     <Typography
                       textAlign="center"
-                      onClick={() =>
-                        Router.push({
-                          pathname: "/login",
-                        })
-                      }
+                      sx={{
+                        color: "grey.dark",
+                      }}
                     >
-                      Login
+                      Chia sẻ tài liệu
                     </Typography>
                   </MenuItem>
-                </Menu>
-              ) : (
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  <MenuItem>
-                    <Typography textAlign="center">
-                      {user.displayName}
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={() => Logout()}>
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
-                </Menu>
-              )}
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      {/* <Drawer open={drawer} onClose={toggleDrawer(false)}>
+                </a>
+              </Link>
+              <MenuItem onClick={() => Logout()}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
+            </Menu>
+          )}
+        </Toolbar>
+      </Container>
+      {/* <Drawer open={drawer} variant="temporary" onClose={toggleDrawer(false)}>
         {list()}
       </Drawer> */}
-    </React.Fragment>
+    </AppBar>
   );
 }
