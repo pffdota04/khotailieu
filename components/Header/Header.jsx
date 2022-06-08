@@ -169,7 +169,6 @@ export default function Header(props) {
             sx={{
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
-              justifyContent: "center",
             }}
           >
             {/* {pages.map((page, i) => (
@@ -203,8 +202,7 @@ export default function Header(props) {
               variant="h6"
               noWrap
               sx={{
-                                      marginLeft: "20px",
-
+                marginLeft: "20px",
               }}
             >
               <Link href="/share">

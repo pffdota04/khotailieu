@@ -28,6 +28,7 @@ import AddIcon from "@mui/icons-material/Add";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import MoodBadIcon from "@mui/icons-material/MoodBad";
 import axios from "axios";
+import Head from "next/head";
 
 const includeNames = [
   "Word",
@@ -111,6 +112,19 @@ const Share = () => {
 
   return (
     <Container sx={{ paddingTop: "65px" }}>
+      <Head>
+        <title key="title">Chia sẽ tài liệu cho mọi người </title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="google" content="notranslate" />
+        <meta
+          name="description"
+          content="Chia sẽ tài liệu của bạn, cho những người khốn khổ một lần nữa có niềm tin vào sự tươi đẹp của cuộc sống."
+        />
+        <meta
+          property="og:description"
+          content="Chia sẽ tài liệu của bạn, cho những người khốn khổ một lần nữa có niềm tin vào sự tươi đẹp của cuộc sống."
+        />
+      </Head>
       <Grid container columns={24} m={0} alignItems="flex-start">
         <Grid
           container

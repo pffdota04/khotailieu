@@ -3,6 +3,7 @@ import Link from "next/link";
 import variables from "./../styles/Home.module.scss";
 import { useState } from "react";
 import Router from "next/router";
+import Head from "next/head";
 
 export default function IndexPage() {
   const [type, setType] = useState("all");
@@ -32,6 +33,25 @@ export default function IndexPage() {
 
   return (
     <div style={{ background: "#000000" }}>
+      <Head>
+        <title key="title">Trang chủ KhoTailLieu</title>
+        <meta
+          name="description"
+          content="Chia sẽ tài liệu, đồ án, đề thi, tiểu luận hoàn toàn miễn phí. Cùng nhau chia sẽ, học tập và qua môn!"
+        />
+        <meta
+          property="og:description"
+          content="Chia sẽ tài liệu, đồ án, đề thi, tiểu luận hoàn toàn miễn phí. Cùng nhau chia sẽ, học tập và qua môn!"
+        />
+        
+        <meta
+          name="keywords"
+          content="KHOTAILIEU, khotailieu, đồ án, tiểu luận, tài liệu, đề thi, hcmute, chia sẽ"
+        />
+
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="google" content="notranslate" />
+      </Head>
       <Box
         className={
           variables.home_hero +

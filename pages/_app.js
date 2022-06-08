@@ -5,6 +5,7 @@ import NProgress from "nprogress";
 import Router from "next/router";
 import "./../styles/nprocess.css";
 
+
 Router.onRouteChangeStart = () => {
   console.log(0);
   NProgress.start();
@@ -51,6 +52,7 @@ export default function MyApp({ Component, pageProps }) {
   });
   return (
     <div>
+    
       <ThemeProvider theme={theme}>
         <Header />
         <Component {...pageProps} />

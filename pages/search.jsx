@@ -17,10 +17,11 @@ import Router from "next/router";
 import { Container } from "@mui/system";
 import style from "./../styles/Search.module.scss";
 import CardItem from "../components/CardItem/Card";
-
+import CircularProgress from "@mui/material/CircularProgress";
 import Image from "next/image";
 import Hori1 from "./../assets/images/hori.png";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Head from "next/head";
 
 export default function Search(props) {
   const { keyword, type, category } = useRouter().query;
@@ -31,12 +32,29 @@ export default function Search(props) {
   const [hasMore, setHasMore] = useState(true);
   const [data, setData] = useState([]);
   const [dataInfo, setDataInfo] = useState([]);
+  const [loadingInfo, setLoadingInfo] = useState(true);
 
   useEffect(() => {
-    if (props.searchResulf == null) alert("Không tìm thấy");
+    console.log("USEEFFECTTTTTTE");
+    if (props.searchResulf == null) setLoadingInfo(false);
     else {
-      setDataInfo(props.searchResulf);
-      setData(props.infoResulf);
+      // setDataInfo(props.searchResulf);
+      setData(props.searchResulf);
+      if (props.searchResulf.length < 6) setHasMore(false);
+      let infoResult = [];
+      Promise.all(
+        props.searchResulf.slice(0, 6).map(async (e) => {
+          infoResult.push(
+            (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id))
+              .data
+          );
+        })
+      )
+        .then(() => {
+          setDataInfo(infoResult);
+          setLoadingInfo(false);
+        })
+        .catch(() => setLoadingInfo(false));
     }
   }, []);
 
@@ -61,6 +79,7 @@ export default function Search(props) {
     if (value == "") alert("Nhập vào trống!");
     else
       try {
+        setLoadingInfo(true);
         Router.push({
           pathname: "/search",
           query: {
@@ -84,14 +103,18 @@ export default function Search(props) {
         await Promise.all(
           searchResulf.data.slice(0, 6).map(async (e) => {
             infoResult.push(
-              (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id)).data
+              (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id))
+                .data
             );
           })
         );
+        setLoadingInfo(false);
         setDataInfo(infoResult);
       } catch (error) {
         console.error(error);
+        setDataInfo([]);
         setData([]);
+        setLoadingInfo(false);
       }
     setSearchFor(value);
   };
@@ -118,6 +141,34 @@ export default function Search(props) {
 
   return (
     <div style={{ paddingTop: "66px" }} className={style.search}>
+      <Head>
+        <title key="title">Tìm tài liệu "{keyword}" tại KhoTaiLieu </title>
+        <meta name="description" content="Some Page Description" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="google" content="notranslate" />
+        <meta
+          name="description"
+          content={
+            "Tìm kiếm '" +
+            keyword +
+            "': " +
+            (props.searchResulf
+              ? props.searchResulf[0].keyword + "..."
+              : "Không tìm thấy!")
+          }
+        />
+        <meta
+          property="og:description"
+          content={
+            "Kết quả tìm kiếm cho '" +
+            keyword +
+            "': " +
+            (props.searchResulf
+              ? props.searchResulf[0].keyword + "..."
+              : "Không tìm thấy!")
+          }
+        />
+      </Head>
       <Box textAlign="center">
         <Typography
           variant="h4"
@@ -235,12 +286,21 @@ export default function Search(props) {
                 {JSON.stringify(dataInfo)}
                 <hr />
                 {hasMore ? "true " : "false"} */}
-                {dataInfo.length > 0 ? (
+
+                {loadingInfo ? (
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <CircularProgress />
+                  </Box>
+                ) : dataInfo.length > 0 ? (
                   <InfiniteScroll
                     dataLength={dataInfo.length} //This is important field to render the next data
                     next={fetchMoreData}
                     hasMore={hasMore}
-                    loader={<h4>Loading...</h4>}
+                    loader={
+                      <Box sx={{ display: "flex", justifyContent: "center" }}>
+                        <CircularProgress />
+                      </Box>
+                    }
                     endMessage={
                       <p style={{ textAlign: "center" }}>
                         <b>Yay! You have seen it all</b>
@@ -300,19 +360,19 @@ export async function getServerSideProps(context) {
         `&category=` +
         a.category
     );
-    let infoResult = [];
-    await Promise.all(
-      searchResulf.data.slice(0, 6).map(async (e) => {
-        infoResult.push(
-          (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id)).data
-        );
-      })
-    );
-
+    // let infoResult = [];
+    // await Promise.all(
+    //   searchResulf.data.slice(0, 6).map(async (e) => {
+    //     infoResult.push(
+    //       (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id)).data
+    //     );
+    //   })
+    // );
+    console.log("Search SSR COMPALTE");
     return {
       props: {
         searchResulf: searchResulf.data,
-        infoResulf: infoResult,
+        // infoResulf: infoResult,
       },
     };
   } catch (error) {
