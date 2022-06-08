@@ -215,7 +215,6 @@ export default function Header(props) {
                       textTransform: "inherit",
                       alignItems: "center",
                     }}
-                    gutterBottom="false"
                   >
                     Chia sẻ tài liệu
                   </Typography>

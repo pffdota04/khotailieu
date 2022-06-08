@@ -117,7 +117,7 @@ const Detail = (props) => {
                 <Box sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                   Bao gồm:{" "}
                   {props.info.include.map((e, i) => (
-                    <MyChip type={e} sx={{ m: "1px" }} key={i} />
+                    <MyChip type={e} sx={{ m: "1px" }}  />
                   ))}
                 </Box>
               </CardContent>

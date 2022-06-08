@@ -212,7 +212,6 @@ export default function Search(props) {
               id="outlined-select-currency-native"
               label="Loại"
               select
-              labelId="demo-select-small"
               value={selectType}
               onChange={handleChangeType}
             >
@@ -232,7 +231,6 @@ export default function Search(props) {
               id="outlined-select-currency-native"
               label="Lĩnh vực"
               select
-              labelId="demo-select-small"
               value={selectCategory}
               onChange={handleChangeCategory}
               sx={{ backgroundColor: "grey.light" }}
@@ -281,12 +279,6 @@ export default function Search(props) {
                 >
                   Tìm thấy {data.length} kết quả
                 </Typography>
-                {/* {JSON.stringify(data)}
-                <hr />
-                {JSON.stringify(dataInfo)}
-                <hr />
-                {hasMore ? "true " : "false"} */}
-
                 {loadingInfo ? (
                   <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <CircularProgress />
@@ -307,8 +299,8 @@ export default function Search(props) {
                       </p>
                     }
                   >
-                    {dataInfo.map((e) => (
-                      <CardItem item={e} />
+                    {dataInfo.map((e, i) => (
+                      <CardItem item={e} key={i} />
                     ))}
                   </InfiniteScroll>
                 ) : (

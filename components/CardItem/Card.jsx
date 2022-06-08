@@ -5,6 +5,7 @@ import {
   Stack,
   Typography,
   CardActionArea,
+  Box,
 } from "@mui/material";
 
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
@@ -77,7 +78,7 @@ const CardItem = ({ item }) => {
           opacity: 1,
           backgroundColor: "#e8e8e8",
         },
-        m: 1
+        m: 1,
       }}
     >
       <CardActionArea
@@ -93,7 +94,7 @@ const CardItem = ({ item }) => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography sx={{ fontSize: 14 }} gutterBottom color="primary">
+            <Box sx={{ fontSize: 14 }} gutterBottom color="primary">
               {renderIcon(Object.keys(convertType).indexOf(item.type))}
               {convertType[item.type]} ({item.view}{" "}
               <VisibilityIcon
@@ -105,7 +106,7 @@ const CardItem = ({ item }) => {
                 }}
               />
               )
-            </Typography>
+            </Box>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {item.major}
             </Typography>
@@ -122,13 +123,13 @@ const CardItem = ({ item }) => {
           </Typography>
           <Typography display="inline-block">({item.date})</Typography>
 
-          <Typography variant="body2">
+          <Box variant="body2">
             Bao gồm:{" "}
             {item.include?.map((e, i) => (
               // <Chip icon={renderTypeIcon(e)} label={e} sx={{ m: "1px" }} />
-              <MyChip type={e} sx={{ m: "1px" }} key={i} />
+              <MyChip type={e} sx={{ m: "1px" }} key={i}/>
             ))}
-          </Typography>
+          </Box>
         </CardContent>
       </CardActionArea>
     </Card>
