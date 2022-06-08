@@ -1,7 +1,6 @@
 import "./../styles/global.css";
 import Header from "../components/Header/Header";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { config } from "./../services/firebase";
 import NProgress from "nprogress";
 import Router from "next/router";
 import "./../styles/nprocess.css";

@@ -1,21 +1,18 @@
 // firebase
 
 import { useEffect, useState } from "react";
-import { Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import Router from "next/router";
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-} from "firebase/auth";
-
-import { auth} from "../services/firebase";
+import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import GoogleIcon from "@mui/icons-material/Google";
+import { auth } from "../services/firebase";
+import style from "./../styles/Login.module.scss";
 const provider = new GoogleAuthProvider();
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [errorLogin, setErrorLogin] = useState(null);
-  const [count, setCounte] = useState(0);
+  const [logined, setLogined] = useState(false);
 
   useEffect(() => {
     auth.onAuthStateChanged((currentUser) => {
@@ -25,10 +22,13 @@ const Login = () => {
           .getIdTokenResult()
           .then((idTokenResult) => {
             console.log(idTokenResult);
+            setLogined(true);
           })
           .catch((error) => {
             console.log(error);
+            setLogined(false);
           });
+      else setLogined(false);
     });
   });
 
@@ -53,26 +53,53 @@ const Login = () => {
         // ...
       });
   };
+  const Logout = () => {
+    signOut(auth)
+      .then(() => {
+        alert("OUT");
+      })
+      .catch((error) => {
+        alert("EOROROrr");
+      });
+  };
 
   return (
-    <Container sx={{ paddingTop: "65px" }}>
-      <main id="main">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>6</div>
-        <div>7</div>
-        <div>8</div>
-        <div onClick={() => setCounte((prv) => prv + 1)}>counter: {count}</div>
-        <div>|</div>
-        <div>|</div>
-        <div>|</div>
-        <div onClick={() => Login()}>|-LOGIN CLICK HERE-|</div>
-        <p>{errorLogin !== null && errorLogin}</p>
-        {userInfo !== null && JSON.stringify(userInfo)}
-      </main>
+    <Container
+      sx={{ paddingTop: "65px", position: "relative" }}
+      className={style.login}
+    >
+      {logined ? (
+        <Button
+          onClick={() => Logout()}
+          variant="contained"
+          sx={{
+            backgroundColor: "danger.main",
+            position: "absolute",
+            top: "50%",
+            right: "50%",
+            transform: "translate(50%, 50%)",
+          }}
+        >
+          Logout
+        </Button>
+      ) : (
+        <Button
+          onClick={() => Login()}
+          variant="contained"
+          sx={{
+            backgroundColor: "danger.main",
+            position: "absolute",
+            top: "50%",
+            right: "50%",
+            transform: "translate(50%, 50%)",
+          }}
+        >
+          <GoogleIcon sx={{ p: "2px" }} /> Đăng nhập với Google
+        </Button>
+      )}
+
+      <p>{errorLogin !== null && errorLogin}</p>
+      {/* {userInfo !== null && JSON.stringify(userInfo)} */}
     </Container>
   );
 };

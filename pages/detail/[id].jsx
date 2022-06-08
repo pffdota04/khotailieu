@@ -37,7 +37,6 @@ const Detail = (props) => {
   const [expanded, setExpanded] = useState(false);
 
   const router = useRouter();
-  const { id } = router.query;
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -117,8 +116,8 @@ const Detail = (props) => {
                 </Typography>
                 <Box sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                   Bao gồm:{" "}
-                  {props.info.include.map((e) => (
-                    <MyChip type={e} sx={{ m: "1px" }} />
+                  {props.info.include.map((e, i) => (
+                    <MyChip type={e} sx={{ m: "1px" }} key={i} />
                   ))}
                 </Box>
               </CardContent>
@@ -194,10 +193,9 @@ export default Detail;
 export async function getServerSideProps(context) {
   const a = context.query;
   try {
-    const data = await axios.get(
-      `https://hcmute.netlify.app/api/detail/` + a.id
-    );
-    const info = await axios.get(`https://hcmute.netlify.app/api/info/` + a.id);
+    const data = await axios.get(`http://localhost:3000/api/detail/` + a.id);
+    const info = await axios.get(`http://localhost:3000/api/info/` + a.id);
+
     return {
       props: {
         data: data.data,
@@ -208,6 +206,7 @@ export async function getServerSideProps(context) {
     console.error(error);
     return {
       props: {
+        info: null,
         data: null,
       },
     };

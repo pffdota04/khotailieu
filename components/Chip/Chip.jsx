@@ -7,7 +7,7 @@ import FilePresentIcon from "@mui/icons-material/FilePresent";
 import PhotoIcon from "@mui/icons-material/Photo";
 import { Chip } from "@mui/material";
 
-export default function MyChip({ type, sx }) {
+export default function MyChip({ type, sx, key }) {
   const renderTypeIcon = (icon) => {
     return icon.includes("word") ? (
       <ChromeReaderModeIcon />

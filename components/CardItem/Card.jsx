@@ -24,6 +24,7 @@ import FilePresentIcon from "@mui/icons-material/FilePresent";
 import PhotoIcon from "@mui/icons-material/Photo";
 import Router from "next/router";
 import MyChip from "./../Chip/Chip";
+import { Key } from "@mui/icons-material";
 
 const CardItem = ({ item }) => {
   const convertType = {
@@ -76,6 +77,7 @@ const CardItem = ({ item }) => {
           opacity: 1,
           backgroundColor: "#e8e8e8",
         },
+        m: 1
       }}
     >
       <CardActionArea
@@ -122,9 +124,9 @@ const CardItem = ({ item }) => {
 
           <Typography variant="body2">
             Bao gồm:{" "}
-            {item.include.map((e) => (
+            {item.include?.map((e, i) => (
               // <Chip icon={renderTypeIcon(e)} label={e} sx={{ m: "1px" }} />
-              <MyChip type={e} sx={{ m: "1px" }} />
+              <MyChip type={e} sx={{ m: "1px" }} key={i} />
             ))}
           </Typography>
         </CardContent>

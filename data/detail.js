@@ -82,7 +82,7 @@ export const detail = [
       },
       {
         status: true,
-        type: "youtube demo",
+        type: "youtube",
         desc: "link demo",
         link: "https://www.youtube.com/watch?v=YQ1vN_91KO0",
       },

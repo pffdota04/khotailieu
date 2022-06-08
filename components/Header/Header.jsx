@@ -34,6 +34,7 @@ import Router from "next/router";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import MenuSharpIcon from "@mui/icons-material/MenuSharp";
+import ShareIcon from "@mui/icons-material/Share";
 
 const pages = ["Tài liệu", "Đề thi", "Đồ án", "Tiểu luận", "Donate"];
 export default function Header(props) {
@@ -103,13 +104,13 @@ export default function Header(props) {
       disablePadding
     >
       <List>
-        {pages.map((text, index) => (
+        {/* {pages.map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={() => appbarItemClick(index)}>
               <ListItemIcon>
                 {index == 0 ? (
                   <StickyNote2Icon />
-                ) : index == 1 ? (
+                ) : index == 1 ? (    
                   <QuizIcon />
                 ) : index == 2 ? (
                   <AccountTreeIcon />
@@ -122,7 +123,15 @@ export default function Header(props) {
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
-        ))}
+        ))} */}
+        <ListItem key={"4e423"} disablePadding>
+          <ListItemButton onClick={() => Router.push("/share")}>
+            <ListItemIcon>
+              <ShareIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Chia sẻ tài liệu"} />
+          </ListItemButton>
+        </ListItem>
       </List>
       <Divider />
     </Box>
@@ -140,7 +149,7 @@ export default function Header(props) {
             noWrap
             sx={{
               display: { xs: "none", md: "flex" },
-              flexGrow: 1,
+              flexGrow: 0,
             }}
           >
             <Link href="/">
@@ -149,14 +158,21 @@ export default function Header(props) {
                   sx={{
                     color: "grey.light",
                   }}
+                  id="logo-text"
                 >
-                  KhoTaiLieux
+                  KhoTaiLieu
                 </Typography>
               </a>
             </Link>
           </Typography>
-          {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page, i) => (
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
+            }}
+          >
+            {/* {pages.map((page, i) => (
                 <Button
                   key={page}
                   onClick={() => {
@@ -166,8 +182,49 @@ export default function Header(props) {
                 >
                   {page}
                 </Button>
-              ))}
-            </Box> */}
+              ))} */}
+
+            {/* <Button
+              key={"xvxc"}
+              onClick={() => {
+                Router.push("/share");
+              }}
+              sx={{
+                my: 2,
+                color: "white",
+                display: "block",
+                textTransform: "inherit",
+                marginLeft: "10px",
+              }}
+            >
+              Chia sẻ tài liệu
+            </Button> */}
+            <Typography
+              variant="h6"
+              noWrap
+              sx={{
+                                      marginLeft: "20px",
+
+              }}
+            >
+              <Link href="/share">
+                <a href="/share">
+                  <Typography
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      textTransform: "inherit",
+                      alignItems: "center",
+                    }}
+                    gutterBottom="false"
+                  >
+                    Chia sẻ tài liệu
+                  </Typography>
+                </a>
+              </Link>
+            </Typography>
+          </Box>
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
             {user === undefined ? (
               <HourglassBottomIcon />
@@ -200,7 +257,7 @@ export default function Header(props) {
 
           {/* MOBLIE */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            {/* <IconButton
+            <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar2"
@@ -209,7 +266,7 @@ export default function Header(props) {
               color="inherit"
             >
               <MenuSharpIcon />
-            </IconButton> */}
+            </IconButton>
             <Menu
               id="menu-appbar2"
               anchorEl={anchorElNav}
@@ -254,8 +311,9 @@ export default function Header(props) {
                   sx={{
                     color: "grey.light",
                   }}
+                  id="logo-text"
                 >
-                  KhoTaiLieux
+                  KhoTaiLieu
                 </Typography>
               </a>
             </Link>
@@ -328,9 +386,9 @@ export default function Header(props) {
           )}
         </Toolbar>
       </Container>
-      {/* <Drawer open={drawer} variant="temporary" onClose={toggleDrawer(false)}>
+      <Drawer open={drawer} variant="temporary" onClose={toggleDrawer(false)}>
         {list()}
-      </Drawer> */}
+      </Drawer>
     </AppBar>
   );
 }

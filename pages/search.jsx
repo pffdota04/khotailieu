@@ -20,23 +20,24 @@ import CardItem from "../components/CardItem/Card";
 
 import Image from "next/image";
 import Hori1 from "./../assets/images/hori.png";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Search(props) {
   const { keyword, type, category } = useRouter().query;
   const [selectType, setType] = useState(type);
   const [searchText, setSearchText] = useState(keyword);
   const [selectCategory, setCategory] = useState(category);
-  const [data, setData] = useState([]);
   const [searchFor, setSearchFor] = useState(keyword);
+  const [hasMore, setHasMore] = useState(true);
+  const [data, setData] = useState([]);
+  const [dataInfo, setDataInfo] = useState([]);
 
   useEffect(() => {
-    console.log(props);
-    if (props.searchResulf == null) {
-      alert("Không tìm thấy");
-    } else {
-      setData(props.searchResulf);
+    if (props.searchResulf == null) alert("Không tìm thấy");
+    else {
+      setDataInfo(props.searchResulf);
+      setData(props.infoResulf);
     }
-    console.log("ONLY ONE");
   }, []);
 
   useEffect(() => {
@@ -69,19 +70,50 @@ export default function Search(props) {
           },
         });
         const searchResulf = await axios.get(
-          `https://hcmute.netlify.app/api/search?keyword=` +
+          `http://localhost:3000/api/search?keyword=` +
             value.toLowerCase() +
             `&type=` +
             selectType +
             `&category=` +
             selectCategory
         );
+        if (searchResulf.length < 6) setHasMore(false);
+        else setHasMore(true);
         setData(searchResulf.data);
+        let infoResult = [];
+        await Promise.all(
+          searchResulf.data.slice(0, 6).map(async (e) => {
+            infoResult.push(
+              (await axios.get(`http://localhost:3000/api/info/` + e.id)).data
+            );
+          })
+        );
+        setDataInfo(infoResult);
       } catch (error) {
         console.error(error);
         setData([]);
       }
     setSearchFor(value);
+  };
+
+  const fetchMoreData = async () => {
+    let nunber = 6;
+    console.log("FETCHHHHHH   ");
+    let infoResult = [];
+    await Promise.all(
+      data.slice(dataInfo.length, dataInfo.length + nunber).map(async (e) => {
+        infoResult.push(
+          (await axios.get(`http://localhost:3000/api/info/` + e.id)).data
+        );
+      })
+    )
+      .then(() => {
+        console.log("MORELENGT: " + infoResult.length);
+        setDataInfo((prev) => [...prev].concat(infoResult));
+        if (infoResult.length < 6) setHasMore(false);
+        return;
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
@@ -97,6 +129,7 @@ export default function Search(props) {
           Kết quả tìm kiếm cho <strong>'{searchFor}'</strong>
         </Typography>
       </Box>
+
       <Container
         sx={{
           opacity: 1,
@@ -188,8 +221,36 @@ export default function Search(props) {
           <Grid item xs={12} md={8}>
             <Box sx={{ width: "100%" }}>
               <Stack spacing={2}>
-                {data.length > 0 ? (
-                  data.map((e) => <CardItem item={e} />)
+                <Typography
+                  variant="h6"
+                  gutterBottom={false}
+                  component="div"
+                  textAlign="center"
+                  backgroundColor="primary"
+                >
+                  Tìm thấy {data.length} kết quả
+                </Typography>
+                {/* {JSON.stringify(data)}
+                <hr />
+                {JSON.stringify(dataInfo)}
+                <hr />
+                {hasMore ? "true " : "false"} */}
+                {dataInfo.length > 0 ? (
+                  <InfiniteScroll
+                    dataLength={dataInfo.length} //This is important field to render the next data
+                    next={fetchMoreData}
+                    hasMore={hasMore}
+                    loader={<h4>Loading...</h4>}
+                    endMessage={
+                      <p style={{ textAlign: "center" }}>
+                        <b>Yay! You have seen it all</b>
+                      </p>
+                    }
+                  >
+                    {dataInfo.map((e) => (
+                      <CardItem item={e} />
+                    ))}
+                  </InfiniteScroll>
                 ) : (
                   <Typography
                     variant="h4"
@@ -232,16 +293,26 @@ export async function getServerSideProps(context) {
   const a = context.query;
   try {
     const searchResulf = await axios.get(
-      `https://hcmute.netlify.app/api/search?keyword=` +
+      `http://localhost:3000/api/search?keyword=` +
         a.keyword.toLowerCase() +
         `&type=` +
         a.type +
         `&category=` +
         a.category
     );
+    let infoResult = [];
+    await Promise.all(
+      searchResulf.data.slice(0, 6).map(async (e) => {
+        infoResult.push(
+          (await axios.get(`http://localhost:3000/api/info/` + e.id)).data
+        );
+      })
+    );
+
     return {
       props: {
         searchResulf: searchResulf.data,
+        infoResulf: infoResult,
       },
     };
   } catch (error) {

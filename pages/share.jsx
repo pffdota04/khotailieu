@@ -27,6 +27,7 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import MoodBadIcon from "@mui/icons-material/MoodBad";
+import axios from "axios";
 
 const includeNames = [
   "Word",
@@ -89,7 +90,20 @@ const Share = () => {
           return;
         }
       });
-      setCountCheck(-1);
+      axios({
+        method: "post",
+        url: `http://localhost:3000/api/pending`,
+        data: {
+          info: { ...info, type: type, category: category, include: includes },
+          detail: links,
+        },
+      })
+        .then((response) => {
+          setCountCheck(-1);
+        })
+        .catch((e) => {
+          setCountCheck(-2);
+        });
     }
   };
 
@@ -362,6 +376,23 @@ const Share = () => {
                   }}
                 >
                   Okela
+                </Button>
+              </Box>
+            </>
+          ) : countCheck == -2 ? (
+            <>
+              <Alert variant="filled" severity="danger" m={1} sx={{ m: 1 }}>
+                Oppps... Đã xảy ra lỗi, hãy thử lại. Mong bạn thông cảm!
+              </Alert>
+              <Box display="flex" justifyContent="center">
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: "danger.main" }}
+                  onClick={() => {
+                    setOpenModal(false);
+                  }}
+                >
+                  Ok
                 </Button>
               </Box>
             </>
