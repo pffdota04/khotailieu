@@ -23,7 +23,7 @@ import Hori1 from "./../assets/images/hori.png";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Head from "next/head";
 
-export default function Search(props) {
+const Search = (props) => {
   const { keyword, type, category } = useRouter().query;
   const [selectType, setType] = useState(type);
   const [searchText, setSearchText] = useState(keyword);
@@ -339,11 +339,12 @@ export default function Search(props) {
       </Container>
     </div>
   );
-}
-
+};
+export default Search;
 export async function getServerSideProps(context) {
-  const a = context.query;
   try {
+    console.log("START SEARCH: ");
+    const a = context.query;
     const searchResulf = await axios.get(
       `https://hcmute.netlify.app/api/search?keyword=` +
         a.keyword.toLowerCase() +
@@ -352,19 +353,10 @@ export async function getServerSideProps(context) {
         `&category=` +
         a.category
     );
-    // let infoResult = [];
-    // await Promise.all(
-    //   searchResulf.data.slice(0, 6).map(async (e) => {
-    //     infoResult.push(
-    //       (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id)).data
-    //     );
-    //   })
-    // );
     console.log("Search SSR COMPALTE");
     return {
       props: {
         searchResulf: searchResulf.data,
-        // infoResulf: infoResult,
       },
     };
   } catch (error) {
