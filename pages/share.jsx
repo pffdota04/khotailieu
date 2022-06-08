@@ -92,7 +92,7 @@ const Share = () => {
       });
       axios({
         method: "post",
-        url: `http://localhost:3000/api/pending`,
+        url: `https://hcmute.netlify.app/api/pending`,
         data: {
           info: { ...info, type: type, category: category, include: includes },
           detail: links,

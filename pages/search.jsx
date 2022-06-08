@@ -70,7 +70,7 @@ export default function Search(props) {
           },
         });
         const searchResulf = await axios.get(
-          `http://localhost:3000/api/search?keyword=` +
+          `https://hcmute.netlify.app/api/search?keyword=` +
             value.toLowerCase() +
             `&type=` +
             selectType +
@@ -84,7 +84,7 @@ export default function Search(props) {
         await Promise.all(
           searchResulf.data.slice(0, 6).map(async (e) => {
             infoResult.push(
-              (await axios.get(`http://localhost:3000/api/info/` + e.id)).data
+              (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id)).data
             );
           })
         );
@@ -103,7 +103,7 @@ export default function Search(props) {
     await Promise.all(
       data.slice(dataInfo.length, dataInfo.length + nunber).map(async (e) => {
         infoResult.push(
-          (await axios.get(`http://localhost:3000/api/info/` + e.id)).data
+          (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id)).data
         );
       })
     )
@@ -293,7 +293,7 @@ export async function getServerSideProps(context) {
   const a = context.query;
   try {
     const searchResulf = await axios.get(
-      `http://localhost:3000/api/search?keyword=` +
+      `https://hcmute.netlify.app/api/search?keyword=` +
         a.keyword.toLowerCase() +
         `&type=` +
         a.type +
@@ -304,7 +304,7 @@ export async function getServerSideProps(context) {
     await Promise.all(
       searchResulf.data.slice(0, 6).map(async (e) => {
         infoResult.push(
-          (await axios.get(`http://localhost:3000/api/info/` + e.id)).data
+          (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id)).data
         );
       })
     );

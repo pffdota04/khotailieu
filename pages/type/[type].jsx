@@ -141,7 +141,7 @@ export async function getServerSideProps(context) {
   const a = context.query;
   try {
     const searchResulf = await axios.get(
-      `http://localhost:3000/api/type/` + a.type
+      `https://hcmute.netlify.app/api/type/` + a.type
     );
     return {
       props: {

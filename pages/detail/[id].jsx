@@ -193,8 +193,8 @@ export default Detail;
 export async function getServerSideProps(context) {
   const a = context.query;
   try {
-    const data = await axios.get(`http://localhost:3000/api/detail/` + a.id);
-    const info = await axios.get(`http://localhost:3000/api/info/` + a.id);
+    const data = await axios.get(`https://hcmute.netlify.app/api/detail/` + a.id);
+    const info = await axios.get(`https://hcmute.netlify.app/api/info/` + a.id);
 
     return {
       props: {
