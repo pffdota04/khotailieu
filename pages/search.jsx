@@ -19,7 +19,7 @@ import Hori1 from "./../assets/images/hori.png";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Head from "next/head";
 
-const Search = (props) => {
+const LetSearch = (props) => {
   const { keyword, type, category } = useRouter().query;
   const [selectType, setType] = useState(type);
   const [searchText, setSearchText] = useState(keyword);
@@ -343,7 +343,7 @@ const Search = (props) => {
     </div>
   );
 };
-export default Search;
+export default LetSearch;
 
 export async function getServerSideProps(context) {
   try {

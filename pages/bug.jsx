@@ -1,25 +1,10 @@
-import {
-  Box,
-  Grid,
-  MenuItem,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
-import Router from "next/router";
+import { Box, Typography } from "@mui/material";
+
 import { Container } from "@mui/system";
 import style from "./../styles/Search.module.scss";
-import CardItem from "../components/CardItem/Card";
-import CircularProgress from "@mui/material/CircularProgress";
-import Image from "next/image";
-import Hori1 from "./../assets/images/hori.png";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Head from "next/head";
 
-const Search = (props) => {
+const Huhu = (props) => {
+ 
   return (
     <div style={{ paddingTop: "66px" }} className={style.search}>
       <Box textAlign="center">
@@ -30,7 +15,7 @@ const Search = (props) => {
           alignItems="center"
           p={1}
         >
-          remove state <strong>'{JSON.stringify(props)}'</strong>
+          just jsx + state + noapi + query <strong>'{props}'</strong>
         </Typography>
       </Box>
 
@@ -44,22 +29,14 @@ const Search = (props) => {
     </div>
   );
 };
-export default Search;
+export default Huhu;
 
 export async function getServerSideProps(context) {
   try {
     const query = context.query;
-    const searchResulf = await axios.get(
-      `https://hcmute.netlify.app/api/search?keyword=` +
-        query.keyword.toLowerCase() +
-        `&type=` +
-        query.type +
-        `&category=` +
-        query.category
-    );
     return {
       props: {
-        searchResulf: searchResulf.data,
+        searchResulf: query,
       },
     };
   } catch (error) {

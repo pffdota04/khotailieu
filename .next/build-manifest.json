@@ -30,10 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/debug.js"
     ],
-    "/rm": [
+    "/search": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/rm.js"
+      "static/chunks/pages/search.js"
     ]
   },
   "ampFirstPages": []

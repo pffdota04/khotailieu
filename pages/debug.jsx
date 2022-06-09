@@ -19,7 +19,7 @@ import Hori1 from "./../assets/images/hori.png";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Head from "next/head";
 
-const Search = (props) => {
+const Searchx = (props) => {
   const { keyword, type, category } = useRouter().query;
   const [selectType, setType] = useState(type);
   const [searchText, setSearchText] = useState(keyword);
@@ -152,21 +152,15 @@ const Search = (props) => {
           alignItems="center"
           p={1}
         >
-          just jsx <strong>'{searchFor}'</strong>
+          just jsx + state + api <strong>'{props}'</strong>
         </Typography>
       </Box>
 
-      <Container
-        sx={{
-          opacity: 1,
-          padding: "10px",
-          borderRadius: "10px",
-        }}
-      ></Container>
+
     </div>
   );
 };
-export default Search;
+export default Searchx;
 
 export async function getServerSideProps(context) {
   try {
