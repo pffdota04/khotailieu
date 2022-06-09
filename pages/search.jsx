@@ -1,14 +1,10 @@
 import {
   Box,
-  Card,
-  CardContent,
-  Chip,
   Grid,
   MenuItem,
   Stack,
   TextField,
   Typography,
-  CardActionArea,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -341,6 +337,7 @@ const Search = (props) => {
   );
 };
 export default Search;
+
 export async function getServerSideProps(context) {
   try {
     console.log("START SEARCH: ");

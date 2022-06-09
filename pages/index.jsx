@@ -99,7 +99,7 @@ export default function IndexPage() {
                 id="outlined-select-currency-native"
                 label="Loại"
                 select
-                labelId="demo-select-small"
+                
                 value={type}
                 onChange={handleChangeType}
                 onFocus={() => setOnActive(true)}
@@ -121,8 +121,7 @@ export default function IndexPage() {
                 id="outlined-select-currency-native"
                 label="Lĩnh vực"
                 select
-                labelId="demo-select-small"
-                value={category}
+                  value={category}
                 onChange={handleChangeCategory}
                 onFocus={() => setOnActive(true)}
               >
