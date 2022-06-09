@@ -25,15 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/debug": [
+    "/abc": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/debug.js"
+      "static/chunks/pages/abc.js"
     ],
-    "/search": [
+    "/xyz": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/search.js"
+      "static/chunks/pages/xyz.js"
     ]
   },
   "ampFirstPages": []

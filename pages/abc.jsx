@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import axios from "axios";
 
 import { Container } from "@mui/system";
 import style from "./../styles/Search.module.scss";
@@ -14,7 +15,8 @@ const Hehe = (props) => {
           alignItems="center"
           p={1}
         >
-          just jsx + state + noapi + query <strong>'{props}'</strong>
+          just jsx + state + noapi + query{" "}
+          <strong>'{JSON.stringify(props)}'</strong>
         </Typography>
       </Box>
 
@@ -35,9 +37,11 @@ export async function getServerSideProps(context) {
     const searchResulf = await axios.get(
       `https://hcmute.netlify.app/api/search?keyword=a&type=all&category=all`
     );
+    const query = context.query;
+    console.error(query);
     return {
       props: {
-        searchResulf: searchResulf,
+        searchResulf: searchResulf.data,
       },
     };
   } catch (error) {

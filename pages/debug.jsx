@@ -152,11 +152,9 @@ const Searchx = (props) => {
           alignItems="center"
           p={1}
         >
-          just jsx + state + api <strong>'{props}'</strong>
+          just jsx + state + api <strong>{JSON.stringify(props)}</strong>
         </Typography>
       </Box>
-
-
     </div>
   );
 };

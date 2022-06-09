@@ -4,7 +4,6 @@ import { Container } from "@mui/system";
 import style from "./../styles/Search.module.scss";
 
 const Huhu = (props) => {
- 
   return (
     <div style={{ paddingTop: "66px" }} className={style.search}>
       <Box textAlign="center">
@@ -36,7 +35,7 @@ export async function getServerSideProps(context) {
     const query = context.query;
     return {
       props: {
-        searchResulf: query,
+        searchResulf: JSON.stringify(query),
       },
     };
   } catch (error) {
