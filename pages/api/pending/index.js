@@ -11,7 +11,10 @@ export default async function personHandler(req, res) {
         const body = req.body;
         console.log(body);
         // need check input
-        await messagesRef.child("pending").push(body);
+        await messagesRef.child("pending").push({
+          ...body,
+          date: new Date().toJSON().slice(0, 10).split("-").reverse().join("/"),
+        });
         res.status(200).json({ message: `Post to pending success!` });
       } catch (error) {
         console.log(error);

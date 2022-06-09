@@ -5,19 +5,15 @@ import NProgress from "nprogress";
 import Router from "next/router";
 import "./../styles/nprocess.css";
 
-
 Router.onRouteChangeStart = () => {
-  console.log(0);
   NProgress.start();
 };
 
 Router.onRouteChangeComplete = () => {
-  console.log(1);
   NProgress.done();
 };
 
 Router.onRouteChangeError = () => {
-  console.log(2);
   NProgress.done();
 };
 
@@ -52,7 +48,6 @@ export default function MyApp({ Component, pageProps }) {
   });
   return (
     <div>
-    
       <ThemeProvider theme={theme}>
         <Header />
         <Component {...pageProps} />

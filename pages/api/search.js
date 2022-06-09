@@ -1,65 +1,45 @@
-import { info } from "../../data/info";
+import * as data from "../../data/keyword.json";
 import runMiddleware from "./../../lib/cors";
-import admin from "./../../services/admin/index";
 
 export default async function personHandler(req, res) {
-  let messagesRef = admin.database().ref();
   await runMiddleware(req, res, ["GET"]);
-  const { keyword, type, category, page } = req.query;
+  const { keyword, type, category } = req.query;
   try {
-    const allkeyword = await messagesRef.child("keyword").once("value");
+    if (!keyword || !type || !category) throw "Some query is undefine!";
     let filtered = [];
-    if (
-      category != undefined &&
-      category != "all" &&
-      type != undefined &&
-      type != "all"
-    )
-      filtered = allkeyword
-        .val()
-        .filter(
+    console.log("Cache data lenght: " + data.length);
+    console.log(
+      "keyword, type, category: " + keyword + ", " + type + ", " + category
+    );
+
+    if (type == "all") {
+      if (category == "all")
+        filtered = data.filter((p) =>
+          p.keyword.includes(keyword.toLowerCase())
+        );
+      else
+        filtered = data.filter(
           (p) =>
             p.keyword.includes(keyword.toLowerCase()) &&
-            p.type == type &&
-            p.major == category
+            p.filter.includes(category)
         );
-    else if (
-      (category == undefined || category == "all") &&
-      (type == undefined || type == "all")
-    )
-      filtered = allkeyword
-        .val()
-        .filter((p) => p.keyword.includes(keyword.toLowerCase()));
-    else if (
-      (category == undefined || category == "all") &&
-      type != undefined &&
-      type != "all"
-    )
-      filtered = allkeyword
-        .val()
-        .filter(
+    } else {
+      if (category == "all")
+        filtered = data.filter(
           (p) =>
-            p.keyword.includes(keyword.toLowerCase()) && p.type.includes(type)
+            p.keyword.includes(keyword.toLowerCase()) && p.filter.includes(type)
         );
-    else if (
-      (type == undefined || type == "all") &&
-      category != undefined &&
-      category != "all"
-    )
-      filtered = allkeyword
-        .val()
-        .filter(
+      else
+        filtered = data.filter(
           (p) =>
             p.keyword.includes(keyword.toLowerCase()) &&
-            p.major.includes(category)
+            p.filter.includes(type) &&
+            p.filter.includes(category)
         );
+    }
+    console.log("Dảta response lenght: " + filtered.length);
 
     if (filtered.length > 0) {
-      // let info = [];
-      // filtered.map(async (e) => {
-      //   info.push(await getInfoById(messagesRef, e.id, page));
-      // });
-
       res.status(200).json(filtered);
     } else {
       res

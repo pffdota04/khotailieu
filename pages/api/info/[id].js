@@ -6,7 +6,6 @@ export default async function personHandler(req, res) {
   await runMiddleware(req, res, ["GET"]);
   const { id } = req.query;
   try {
-    console.log("INFO OF " + id);
     const fdata = await messagesRef
       .child("info")
       .orderByChild("id")

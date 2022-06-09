@@ -29,20 +29,19 @@ const Search = (props) => {
   const [data, setData] = useState([]);
   const [dataInfo, setDataInfo] = useState([]);
   const [loadingInfo, setLoadingInfo] = useState(true);
+  const [init, setInit] = useState(true);
 
   useEffect(() => {
     console.log("USEEFFECTTTTTTE");
     if (props.searchResulf == null) setLoadingInfo(false);
     else {
-      // setDataInfo(props.searchResulf);
       setData(props.searchResulf);
       if (props.searchResulf.length < 6) setHasMore(false);
       let infoResult = [];
       Promise.all(
         props.searchResulf.slice(0, 6).map(async (e) => {
           infoResult.push(
-            (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id))
-              .data
+            (await axios.get(window.location.origin + `/api/info/` + e.id)).data
           );
         })
       )
@@ -55,7 +54,10 @@ const Search = (props) => {
   }, []);
 
   useEffect(() => {
-    searching(searchText);
+    if (!init) {
+      searching(searchText);
+    }
+    setInit(false);
   }, [selectCategory, selectType]);
 
   const handleChangeType = (event) => {
@@ -76,16 +78,21 @@ const Search = (props) => {
     else
       try {
         setLoadingInfo(true);
-        Router.push({
-          pathname: "/search",
-          query: {
-            keyword: value,
-            type: selectType,
-            category: selectCategory,
+        Router.push(
+          {
+            pathname: "/search",
+            query: {
+              keyword: value,
+              type: selectType,
+              category: selectCategory,
+            },
           },
-        });
+          undefined,
+          { shallow: true }
+        );
         const searchResulf = await axios.get(
-          `https://hcmute.netlify.app/api/search?keyword=` +
+          window.location.origin +
+            `/api/search?keyword=` +
             value.toLowerCase() +
             `&type=` +
             selectType +
@@ -99,7 +106,7 @@ const Search = (props) => {
         await Promise.all(
           searchResulf.data.slice(0, 6).map(async (e) => {
             infoResult.push(
-              (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id))
+              (await axios.get(window.location.origin + `/api/info/` + e.id))
                 .data
             );
           })
@@ -122,7 +129,7 @@ const Search = (props) => {
     await Promise.all(
       data.slice(dataInfo.length, dataInfo.length + nunber).map(async (e) => {
         infoResult.push(
-          (await axios.get(`https://hcmute.netlify.app/api/info/` + e.id)).data
+          (await axios.get(window.location.origin + `/api/info/` + e.id)).data
         );
       })
     )
@@ -340,17 +347,15 @@ export default Search;
 
 export async function getServerSideProps(context) {
   try {
-    console.log("START SEARCH: ");
-    const a = context.query;
+    const query = context.query;
     const searchResulf = await axios.get(
       `https://hcmute.netlify.app/api/search?keyword=` +
-        a.keyword.toLowerCase() +
+        query.keyword.toLowerCase() +
         `&type=` +
-        a.type +
+        query.type +
         `&category=` +
-        a.category
+        query.category
     );
-    console.log("Search SSR COMPALTE");
     return {
       props: {
         searchResulf: searchResulf.data,
@@ -358,6 +363,7 @@ export async function getServerSideProps(context) {
     };
   } catch (error) {
     console.error("error");
+    console.error(error);
     return {
       props: {
         searchResulf: null,

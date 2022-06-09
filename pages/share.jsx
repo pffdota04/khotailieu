@@ -93,7 +93,7 @@ const Share = () => {
       });
       axios({
         method: "post",
-        url: `https://hcmute.netlify.app/api/pending`,
+        url: window.location.origin + `/api/pending`,
         data: {
           info: { ...info, type: type, category: category, include: includes },
           detail: links,
@@ -233,6 +233,18 @@ const Share = () => {
                 <ClearIcon onClick={() => setIncludes([])} />
               </Box>
             )}
+          </Grid>
+          <Grid item xs={12}>
+                 <Alert severity="info" sx={{marginBottom: "5px"}}>
+              Chú ý: Nếu không biết nội dung bạn muốn chia sẻ thuộc 'Loại' hay 'Lĩnh lực' nào, hãy
+              chọn cái mô tả gần giống nhất!
+            </Alert>
+             <Alert severity="info" sx={{marginBottom: "5px"}}>
+              Chú ý: Khi chia sẻ link, bạn nên chọn chế độ công khai
+            </Alert>
+            <Alert severity="info" sx={{marginBottom: "5px"}}>
+              Bạn thật xinh đẹp, chúc bạn một ngày vui vẻ!
+            </Alert>
           </Grid>
         </Grid>
         <Grid container md={6} xs={12} m={0} justifyContent="center">

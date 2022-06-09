@@ -32,22 +32,18 @@ export default async function personHandler(req, res) {
                   .child("pending")
                   .child(keyPending)
                   .once("value");
-                console.log(response.val());
                 const keyword =
                   response.val().info.name +
                   " " +
                   response.val().info.author +
                   " ";
                 response.val().info.date;
-                console.log(keyword);
                 let addResult = await setNewInfo(
                   messagesRef,
                   response.val(),
                   newId,
                   keyword.toLowerCase()
                 );
-                console.log(addResult);
-                console.log("-------------------");
                 res.status(200).json({
                   message: `Post to info success! New id is ${newId}`,
                 });
@@ -90,15 +86,19 @@ const setNewInfo = async (messRef, body, newID, keyword) => {
     await messRef
       .child("info")
       .child(newID)
-      .set({ ...body.info, id: newID });
+      .set({ ...body.info, date: body.date, id: newID, view: 0, status: "Ok" });
     await messRef
       .child("detail")
       .child(newID)
-      .set({ ...body.detail, id: newID });
+      .set({ data: body.detail, id: newID });
     await messRef
       .child("keyword")
       .child(newID)
-      .set({ keyword: keyword, id: newID });
+      .set({
+        keyword: keyword,
+        id: newID,
+        filter: body.info.category + " " + body.info.type,
+      });
     return true;
   } catch (error) {
     console.log("error");

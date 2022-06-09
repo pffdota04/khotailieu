@@ -195,7 +195,7 @@ export async function getServerSideProps(context) {
   try {
     console.log("START DTEAIL: " + a);
     const data = await axios.get(
-      `https://hcmute.netlify.app/api/detail/` + a.id
+        `https://hcmute.netlify.app/api/detail/` + a.id
     );
     const info = await axios.get(`https://hcmute.netlify.app/api/info/` + a.id);
     console.log("COMPALTE DTEAIL: " + a);
