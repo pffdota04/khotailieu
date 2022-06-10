@@ -52,33 +52,3 @@ export default async function personHandler(req, res) {
   }
 }
 
-const getInfoById = async (messRef, id) => {
-  let res;
-  res = await messRef
-    .child("info")
-    .orderByChild("id")
-    .equalTo(id)
-    .once("value");
-  return res.val();
-};
-
-const getInfoByIxd = async (messRef, id) => {
-  let res;
-  if (key)
-    res = await messRef
-      .child("info")
-      .orderByChild("id")
-      // .startAt(id)
-      // .endBefore(id, key)
-      // .limitToLast(6)
-      .once("value");
-  else
-    res = await messRef
-      .child("info")
-      .orderByChild("id")
-      .equalTo(id)
-      .limitToLast(6)
-      .once("value");
-
-  return res.val();
-};

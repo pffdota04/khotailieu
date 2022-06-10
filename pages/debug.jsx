@@ -162,23 +162,22 @@ export default Searchx;
 
 export async function getServerSideProps(context) {
   try {
+    var startTime = Date.now();
     const query = context.query;
     const searchResulf = await axios.get(
-      `https://hcmute.netlify.app/api/search?keyword=` +
-        query.keyword.toLowerCase() +
-        `&type=` +
-        query.type +
-        `&category=` +
-        query.category
+      `https://hcmute.netlify.app/api/search?keyword=n&type=all&category=all`
     );
+    var endTime = Date.now();
+    console.log(`Took ${endTime - startTime} milliseconds`);
     return {
       props: {
         searchResulf: searchResulf.data,
+        query: query,
+        time: endTime - startTime,
       },
     };
   } catch (error) {
     console.error("error");
-    console.error(error);
     return {
       props: {
         searchResulf: null,

@@ -14,7 +14,7 @@ export default RemoveAll;
 
 export async function getServerSideProps(context) {
   try {
-    // const query = context.query;
+    const query = context.query;
     // const searchResulf = await axios.get(
     //   `https://hcmute.netlify.app/api/search?keyword=` +
     //     query.keyword.toLowerCase() +
@@ -26,6 +26,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         searchResulf: "????",
+        query: query,
       },
     };
   } catch (error) {

@@ -34,14 +34,18 @@ export default Hehe;
 
 export async function getServerSideProps(context) {
   try {
+    var startTime = Date.now();
     const searchResulf = await axios.get(
       `https://hcmute.netlify.app/api/search?keyword=a&type=all&category=all`
     );
     const query = context.query;
-    console.error(query);
+    var endTime = Date.now();
+    console.log(`Took ${endTime - startTime} milliseconds`);
     return {
       props: {
         searchResulf: searchResulf.data,
+        query: query,
+        time: endTime - startTime,
       },
     };
   } catch (error) {

@@ -347,6 +347,8 @@ export default LetSearch;
 
 export async function getServerSideProps(context) {
   try {
+    console.log(`DEBUGGGGGGGGGGGG`);
+    var startTime = Date.now();
     const query = context.query;
     const searchResulf = await axios.get(
       `https://hcmute.netlify.app/api/search?keyword=` +
@@ -356,6 +358,9 @@ export async function getServerSideProps(context) {
         `&category=` +
         query.category
     );
+    var endTime = Date.now();
+    console.log(`Took ${endTime - startTime} milliseconds`);
+
     return {
       props: {
         searchResulf: searchResulf.data,
