@@ -2,17 +2,14 @@
 import runMiddleware from "./../../lib/cors";
 
 export default async function personHandler(req, res) {
+  var startTime = Date.now();
   await runMiddleware(req, res, ["GET"]);
   let data = require("../../data/keyword.json");
   const { keyword, type, category } = req.query;
   try {
     if (!keyword || !type || !category) throw "Some query is undefine!";
     let filtered = [];
-    console.log("Cache data lenght: " + data.length);
-    console.log(
-      "keyword, type, category: " + keyword + ", " + type + ", " + category
-    );
-
+    console.log("API: " + keyword + ", " + type + ", " + category);
     if (type == "all") {
       if (category == "all")
         filtered = data.filter((p) =>
@@ -38,7 +35,9 @@ export default async function personHandler(req, res) {
             p.filter.includes(category)
         );
     }
-    console.log("Dảta response lenght: " + filtered.length);
+    console.log("API: Data response lenght: " + filtered.length);
+    var endTime = Date.now();
+    console.log(`API: Took ${endTime - startTime} milliseconds`);
 
     if (filtered.length > 0) {
       res.status(200).json(filtered);

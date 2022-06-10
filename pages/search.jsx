@@ -350,14 +350,17 @@ export async function getServerSideProps(context) {
     console.log(`DEBUGGGGGGGGGGGG`);
     var startTime = Date.now();
     const query = context.query;
-    const searchResulf = await axios.get(
-      `https://hcmute.netlify.app/api/search?keyword=` +
-        query.keyword.toLowerCase() +
-        `&type=` +
-        query.type +
-        `&category=` +
-        query.category
-    );
+    console.log(query);
+    const url =
+      `http://localhost:8888/api/search?keyword=` +
+      query.keyword +
+      `&type=` +
+      query.type +
+      `&category=` +
+      query.category;
+    console.log(url);
+
+    const searchResulf = await axios.get(url);
     var endTime = Date.now();
     console.log(`Took ${endTime - startTime} milliseconds`);
     return {
@@ -367,7 +370,7 @@ export async function getServerSideProps(context) {
     };
   } catch (error) {
     console.error("error");
-    console.error(error);
+    console.log(error.response.data);
     return {
       props: {
         searchResulf: null,
