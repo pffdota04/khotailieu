@@ -1,10 +1,25 @@
-import { Box, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
-
+import Router from "next/router";
 import { Container } from "@mui/system";
 import style from "./../styles/Search.module.scss";
+import CardItem from "../components/CardItem/Card";
+import CircularProgress from "@mui/material/CircularProgress";
+import Image from "next/image";
+import Hori1 from "./../assets/images/hori.png";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Head from "next/head";
 
-const Hehezz = (props) => {
+const Searchxxx = (props) => {
   return (
     <div style={{ paddingTop: "66px" }} className={style.search}>
       <Box textAlign="center">
@@ -15,32 +30,22 @@ const Hehezz = (props) => {
           alignItems="center"
           p={1}
         >
-          just jsx + state + noapi + query{" "}
-          <strong>'{JSON.stringify(props)}'</strong>
+          Import + No State <strong>{JSON.stringify(props)}</strong>
         </Typography>
       </Box>
-
-      <Container
-        sx={{
-          opacity: 1,
-          padding: "10px",
-          borderRadius: "10px",
-        }}
-      ></Container>
     </div>
   );
 };
-export default Hehezz;
+export default Searchxxx;
 
 export async function getServerSideProps(context) {
+  console.log("In getServerSideProps asd");
   try {
     var startTime = Date.now();
-    const query = context.query;
     const searchResulf = await axios.get(
-      "https://hcmute.netlify.app/api/search?keyword=" +
-        query.keyword +
-        "&type=all&category=all"
+      `https://hcmute.netlify.app/api/search?keyword=a&type=all&category=all`
     );
+    const query = context.query;
     var endTime = Date.now();
     console.log(`Took ${endTime - startTime} milliseconds`);
     return {

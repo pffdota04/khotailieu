@@ -15,8 +15,7 @@ const Hehe = (props) => {
           alignItems="center"
           p={1}
         >
-          just jsx + state + noapi + query{" "}
-          <strong>'{JSON.stringify(props)}'</strong>
+          No state, no import <strong>'{JSON.stringify(props)}'</strong>
         </Typography>
       </Box>
 
@@ -33,6 +32,7 @@ const Hehe = (props) => {
 export default Hehe;
 
 export async function getServerSideProps(context) {
+  console.log("In getServerSideProps abc");
   try {
     var startTime = Date.now();
     const searchResulf = await axios.get(
