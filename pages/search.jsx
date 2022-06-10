@@ -360,7 +360,6 @@ export async function getServerSideProps(context) {
     );
     var endTime = Date.now();
     console.log(`Took ${endTime - startTime} milliseconds`);
-
     return {
       props: {
         searchResulf: searchResulf.data,

@@ -1,8 +1,9 @@
-import * as data from "../../data/keyword.json";
+// import * as data from "../../data/keyword.json";
 import runMiddleware from "./../../lib/cors";
 
 export default async function personHandler(req, res) {
   await runMiddleware(req, res, ["GET"]);
+  let data = require("../../data/keyword.json");
   const { keyword, type, category } = req.query;
   try {
     if (!keyword || !type || !category) throw "Some query is undefine!";
@@ -51,4 +52,3 @@ export default async function personHandler(req, res) {
     res.status(404).json({ message: `Detail by id: ${keyword} not found.` });
   }
 }
-

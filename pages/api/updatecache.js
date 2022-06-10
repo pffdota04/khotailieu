@@ -9,7 +9,11 @@ export default async function cache(req, res) {
   try {
     const a = await messagesRef.child("keyword").once("value");
     let saveit = a.val().filter((n) => n);
-    fs.writeFileSync("data/keyword.json", JSON.stringify(saveit, null, 4));
+    
+    fs.writeFileSync(
+      "data/keyword.json",
+      JSON.stringify(saveit, (k, v) => v ?? undefined, 4)
+    );
 
     res.status(200).json({ message: `okok` });
   } catch (error) {
