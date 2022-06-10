@@ -93,11 +93,11 @@ const LetSearch = (props) => {
         const searchResulf = await axios.get(
           window.location.origin +
             `/api/search?keyword=` +
-            value.toLowerCase() +
+            encodeURIComponent(value) +
             `&type=` +
-            selectType +
+            encodeURIComponent(selectType) +
             `&category=` +
-            selectCategory
+            encodeURIComponent(selectCategory)
         );
         if (searchResulf.length < 6) setHasMore(false);
         else setHasMore(true);
@@ -350,14 +350,14 @@ export async function getServerSideProps(context) {
     console.log(`DEBUGGGGGGGGGGGG`);
     var startTime = Date.now();
     const query = context.query;
-    console.log(query);
+    console.log(encodeURIComponent(query.keyword));
     const url =
-      `http://localhost:8888/api/search?keyword=` +
-      query.keyword +
+      `https://hcmute.netlify.app/api/search?keyword=` +
+      encodeURIComponent(query.keyword) +
       `&type=` +
-      query.type +
+      encodeURIComponent(query.type) +
       `&category=` +
-      query.category;
+      encodeURIComponent(query.category);
     console.log(url);
 
     const searchResulf = await axios.get(url);
