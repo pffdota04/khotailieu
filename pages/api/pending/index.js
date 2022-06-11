@@ -2,7 +2,7 @@ import runMiddleware from "../../../lib/cors";
 import admin from "./../../../services/admin/index";
 
 export default async function personHandler(req, res) {
-  await runMiddleware(req, res, ["GET", "POST"]);
+  await runMiddleware(req, res, ["POST"]);
   const { method } = req;
   switch (method) {
     case "POST": {
@@ -19,11 +19,12 @@ export default async function personHandler(req, res) {
       } catch (error) {
         console.log(error);
         res.status(500).json({ message: `Add pending error.` });
-        break;
       }
+      break;
     }
     default:
       res.setHeader("Allow", ["POST"]);
       res.status(405).end(`Method ${method} Not Allowed`);
+      beark;
   }
 }
