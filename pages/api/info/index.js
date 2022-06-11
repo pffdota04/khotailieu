@@ -61,8 +61,8 @@ export default async function personHandler(req, res) {
       } catch (error) {
         console.log(error);
         res.status(404).json({ message: `POST failed` });
-        break;
       }
+      break;
     }
     case "GET": {
       try {
@@ -71,8 +71,8 @@ export default async function personHandler(req, res) {
       } catch (error) {
         console.log(error);
         res.status(404).json({ message: `Info by  not found.` });
-        break;
       }
+      break;
     }
     default:
       res.setHeader("Allow", ["POST"]);
