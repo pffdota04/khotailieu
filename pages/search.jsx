@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import {
   Box,
   Grid,
@@ -14,17 +15,25 @@ import { Container } from "@mui/system";
 import style from "./../styles/Search.module.scss";
 import CardItem from "../components/CardItem/Card";
 import CircularProgress from "@mui/material/CircularProgress";
-import Image from "next/image";
-import Hori1 from "./../assets/images/hori.png";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Head from "next/head";
-
+import Hori1 from "./../assets/images/hori.png";
+const Image = dynamic(() => import("next/image"), {
+  ssr: false,
+});
 const LetSearch = (props) => {
-  const { keyword, type, category } = useRouter().query;
-  const [selectType, setType] = useState(type);
-  const [searchText, setSearchText] = useState(keyword);
-  const [selectCategory, setCategory] = useState(category);
-  const [searchFor, setSearchFor] = useState(keyword);
+  const router = useRouter();
+  const [searchParams, SerearchParams] = useState({
+    keyword: undefined,
+    type: undefined,
+    category: undefined,
+  });
+
+  const [selectType, setType] = useState();
+  const [searchText, setSearchText] = useState();
+  const [selectCategory, setCategory] = useState();
+  const [searchFor, setSearchFor] = useState();
+
   const [hasMore, setHasMore] = useState(true);
   const [data, setData] = useState([]);
   const [dataInfo, setDataInfo] = useState([]);
@@ -32,14 +41,41 @@ const LetSearch = (props) => {
   const [init, setInit] = useState(true);
 
   useEffect(() => {
-    console.log("USEEFFECTTTTTTE");
-    if (props.searchResulf == null) setLoadingInfo(false);
+    if (router.isReady) searchFirst();
+  }, [router.isReady]);
+
+  const searchFirst = async () => {
+    const URLSearch = new URLSearchParams(window.location.search);
+    let nowParams = {
+      keyword: URLSearch.get("keyword"),
+      type: URLSearch.get("type"),
+      category: URLSearch.get("category"),
+    };
+    SerearchParams(nowParams);
+    setSearchFor(URLSearch.get("keyword"));
+
+    if (
+      nowParams.keyword == "" ||
+      nowParams.keyword == null ||
+      nowParams.keyword == undefined
+    )
+      // router.push("404");
+      alert(nowParams.keyword);
     else {
-      setData(props.searchResulf);
-      if (props.searchResulf.length < 6) setHasMore(false);
+      const url =
+        `https://hcmute.netlify.app/api/search?keyword=` +
+        encodeURIComponent(nowParams.keyword) +
+        `&type=` +
+        encodeURIComponent(nowParams.type) +
+        `&category=` +
+        encodeURIComponent(nowParams.category);
+      const searchResulf = await axios.get(url);
+
+      setData(searchResulf.data);
+      if (searchResulf.data.length < 6) setHasMore(false);
       let infoResult = [];
       Promise.all(
-        props.searchResulf.slice(0, 6).map(async (e) => {
+        searchResulf.data.slice(0, 6).map(async (e) => {
           infoResult.push(
             (await axios.get(window.location.origin + `/api/info/` + e.id)).data
           );
@@ -51,7 +87,7 @@ const LetSearch = (props) => {
         })
         .catch(() => setLoadingInfo(false));
     }
-  }, []);
+  };
 
   useEffect(() => {
     if (!init) {
@@ -144,34 +180,17 @@ const LetSearch = (props) => {
 
   return (
     <div style={{ paddingTop: "66px" }} className={style.search}>
-      <Head>
-        <title key="title">Tìm tài liệu "{keyword}" tại KhoTaiLieu </title>
+      {/* <Head>
+        <title key="title">Tìm tài liệu tại KhoTaiLieu </title>
         <meta name="description" content="Some Page Description" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="google" content="notranslate" />
-        <meta
-          name="description"
-          content={
-            "Tìm kiếm '" +
-            keyword +
-            "': " +
-            (props.searchResulf
-              ? props.searchResulf[0].keyword + "..."
-              : "Không tìm thấy!")
-          }
-        />
+        <meta name="description" content={"Tìm kiếm tài liệu tại KhoTaiLieu"} />
         <meta
           property="og:description"
-          content={
-            "Kết quả tìm kiếm cho '" +
-            keyword +
-            "': " +
-            (props.searchResulf
-              ? props.searchResulf[0].keyword + "..."
-              : "Không tìm thấy!")
-          }
+          content={"Tìm kiếm tài liệu tại KhoTaiLieu"}
         />
-      </Head>
+      </Head> */}
       <Box textAlign="center">
         <Typography
           variant="h4"
@@ -180,7 +199,7 @@ const LetSearch = (props) => {
           alignItems="center"
           p={1}
         >
-          Kết quả tìm kiếm cho <strong>'{searchFor}'</strong>
+          Kết quả tìm kiếm cho <strong>{searchFor}</strong>
         </Typography>
       </Box>
 
@@ -273,39 +292,41 @@ const LetSearch = (props) => {
           <Grid item xs={12} md={8}>
             <Box sx={{ width: "100%" }}>
               <Stack spacing={2}>
-                <Typography
-                  variant="h6"
-                  gutterBottom={false}
-                  component="div"
-                  textAlign="center"
-                  backgroundColor="primary"
-                >
-                  Tìm thấy {data.length} kết quả
-                </Typography>
                 {loadingInfo ? (
                   <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <CircularProgress />
                   </Box>
                 ) : dataInfo.length > 0 ? (
-                  <InfiniteScroll
-                    dataLength={dataInfo.length} //This is important field to render the next data
-                    next={fetchMoreData}
-                    hasMore={hasMore}
-                    loader={
-                      <Box sx={{ display: "flex", justifyContent: "center" }}>
-                        <CircularProgress />
-                      </Box>
-                    }
-                    endMessage={
-                      <p style={{ textAlign: "center" }}>
-                        <b>Yay! You have seen it all</b>
-                      </p>
-                    }
-                  >
-                    {dataInfo.map((e, i) => (
-                      <CardItem item={e} key={i} />
-                    ))}
-                  </InfiniteScroll>
+                  <>
+                    <Typography
+                      variant="h6"
+                      gutterBottom={false}
+                      component="div"
+                      textAlign="center"
+                      backgroundColor="primary"
+                    >
+                      Tìm thấy {data.length} kết quả
+                    </Typography>
+                    <InfiniteScroll
+                      dataLength={dataInfo.length} //This is important field to render the next data
+                      next={fetchMoreData}
+                      hasMore={hasMore}
+                      loader={
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                          <CircularProgress />
+                        </Box>
+                      }
+                      endMessage={
+                        <p style={{ textAlign: "center" }}>
+                          <b>Yay! You have seen it all</b>
+                        </p>
+                      }
+                    >
+                      {dataInfo.map((e, i) => (
+                        <CardItem item={e} key={i} />
+                      ))}
+                    </InfiniteScroll>
+                  </>
                 ) : (
                   <Typography
                     variant="h4"
@@ -344,37 +365,3 @@ const LetSearch = (props) => {
   );
 };
 export default LetSearch;
-
-export async function getServerSideProps(context) {
-  try {
-    console.log(`DEBUGGGGGGGGGGGG`);
-    var startTime = Date.now();
-    const query = context.query;
-    console.log(encodeURIComponent(query.keyword));
-    const url =
-      `https://hcmute.netlify.app/api/search?keyword=` +
-      encodeURIComponent(query.keyword) +
-      `&type=` +
-      encodeURIComponent(query.type) +
-      `&category=` +
-      encodeURIComponent(query.category);
-    console.log(url);
-
-    const searchResulf = await axios.get(url);
-    var endTime = Date.now();
-    console.log(`Took ${endTime - startTime} milliseconds`);
-    return {
-      props: {
-        searchResulf: searchResulf.data,
-      },
-    };
-  } catch (error) {
-    console.error("error");
-    console.log(error.response.data);
-    return {
-      props: {
-        searchResulf: null,
-      },
-    };
-  }
-}

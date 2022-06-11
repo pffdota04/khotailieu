@@ -235,14 +235,14 @@ const Share = () => {
             )}
           </Grid>
           <Grid item xs={12}>
-                 <Alert severity="info" sx={{marginBottom: "5px"}}>
-              Chú ý: Nếu không biết nội dung bạn muốn chia sẻ thuộc 'Loại' hay 'Lĩnh lực' nào, hãy
-              chọn cái mô tả gần giống nhất!
+            <Alert severity="info" sx={{ marginBottom: "5px" }}>
+              Chú ý: Nếu không biết nội dung bạn muốn chia sẻ thuộc Loại hay
+              Lĩnh lực nào, hãy chọn cái mô tả gần giống nhất!
             </Alert>
-             <Alert severity="info" sx={{marginBottom: "5px"}}>
+            <Alert severity="info" sx={{ marginBottom: "5px" }}>
               Chú ý: Khi chia sẻ link, bạn nên chọn chế độ công khai
             </Alert>
-            <Alert severity="info" sx={{marginBottom: "5px"}}>
+            <Alert severity="info" sx={{ marginBottom: "5px" }}>
               Bạn thật xinh đẹp, chúc bạn một ngày vui vẻ!
             </Alert>
           </Grid>

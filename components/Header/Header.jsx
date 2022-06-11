@@ -153,7 +153,6 @@ export default function Header(props) {
             }}
           >
             <Link href="/">
-              <a href="/">
                 <Typography
                   sx={{
                     color: "grey.light",
@@ -162,7 +161,6 @@ export default function Header(props) {
                 >
                   KhoTaiLieu
                 </Typography>
-              </a>
             </Link>
           </Typography>
           <Box
@@ -206,7 +204,6 @@ export default function Header(props) {
               }}
             >
               <Link href="/share">
-                <a href="/share">
                   <Typography
                     sx={{
                       my: 2,
@@ -218,7 +215,6 @@ export default function Header(props) {
                   >
                     Chia sẻ tài liệu
                   </Typography>
-                </a>
               </Link>
             </Typography>
           </Box>
@@ -303,7 +299,6 @@ export default function Header(props) {
             }}
           >
             <Link href="/">
-              <a href="/">
                 <Typography
                   sx={{
                     color: "grey.light",
@@ -312,7 +307,6 @@ export default function Header(props) {
                 >
                   KhoTaiLieu
                 </Typography>
-              </a>
             </Link>
           </Typography>
 
@@ -363,7 +357,6 @@ export default function Header(props) {
                 <Typography textAlign="center">{user.displayName}</Typography>
               </MenuItem>
               <Link href="/share">
-                <a href="/share">
                   <MenuItem>
                     <Typography
                       textAlign="center"
@@ -374,7 +367,6 @@ export default function Header(props) {
                       Chia sẻ tài liệu
                     </Typography>
                   </MenuItem>
-                </a>
               </Link>
               <MenuItem onClick={() => Logout()}>
                 <Typography textAlign="center">Logout</Typography>

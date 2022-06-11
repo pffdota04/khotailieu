@@ -117,7 +117,7 @@ const Detail = (props) => {
                 <Box sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                   Bao gồm:{" "}
                   {props.info.include.map((e, i) => (
-                    <MyChip type={e} sx={{ m: "1px" }} />
+                    <MyChip type={e} sx={{ m: "1px" }} key={i} />
                   ))}
                 </Box>
               </CardContent>
@@ -126,6 +126,7 @@ const Detail = (props) => {
           <Grid item sm={6} xs={12}>
             {props.data.data.map((e, i) => (
               <Accordion
+                key={i}
                 expanded={expanded === "panel" + i}
                 onChange={handleChange("panel" + i)}
                 sx={{
@@ -179,9 +180,7 @@ const Detail = (props) => {
         </Grid>
         <Box m={1}>
           <Link href="/share">
-            <a href="/share">
-              <Image src={share} alt="qc" />
-            </a>
+            <Image src={share} alt="qc" />
           </Link>
         </Box>
       </Container>
@@ -195,7 +194,7 @@ export async function getServerSideProps(context) {
   try {
     console.log("START DTEAIL: " + a);
     const data = await axios.get(
-        `https://hcmute.netlify.app/api/detail/` + a.id
+      `https://hcmute.netlify.app/api/detail/` + a.id
     );
     const info = await axios.get(`https://hcmute.netlify.app/api/info/` + a.id);
     console.log("COMPALTE DTEAIL: " + a);
