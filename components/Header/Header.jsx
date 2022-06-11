@@ -149,23 +149,23 @@ export default function Header(props) {
             noWrap
             sx={{
               display: { xs: "none", md: "flex" },
-              flexGrow: 0,
+              flexGrow: 1,
             }}
           >
             <Link href="/">
-                <Typography
-                  sx={{
-                    color: "grey.light",
-                  }}
-                  id="logo-text"
-                >
-                  KhoTaiLieu
-                </Typography>
+              <Typography
+                sx={{
+                  color: "grey.light",
+                }}
+                id="logo-text"
+              >
+                KhoTaiLieu
+              </Typography>
             </Link>
           </Typography>
           <Box
             sx={{
-              flexGrow: 1,
+              flexGrow: 0,
               display: { xs: "none", md: "flex" },
             }}
           >
@@ -204,21 +204,21 @@ export default function Header(props) {
               }}
             >
               <Link href="/share">
-                  <Typography
-                    sx={{
-                      my: 2,
-                      color: "white",
-                      display: "block",
-                      textTransform: "inherit",
-                      alignItems: "center",
-                    }}
-                  >
-                    Chia sẻ tài liệu
-                  </Typography>
+                <Typography
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    textTransform: "inherit",
+                    alignItems: "center",
+                  }}
+                >
+                  Chia sẻ tài liệu
+                </Typography>
               </Link>
             </Typography>
           </Box>
-          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+          {/* <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
             {user === undefined ? (
               <HourglassBottomIcon />
             ) : user === null ? (
@@ -246,7 +246,7 @@ export default function Header(props) {
                 <Avatar alt={user.displayName} src={user.photoURL} />
               </IconButton>
             )}
-          </Box>
+          </Box> */}
 
           {/* MOBLIE */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -299,18 +299,18 @@ export default function Header(props) {
             }}
           >
             <Link href="/">
-                <Typography
-                  sx={{
-                    color: "grey.light",
-                  }}
-                  id="logo-text"
-                >
-                  KhoTaiLieu
-                </Typography>
+              <Typography
+                sx={{
+                  color: "grey.light",
+                }}
+                id="logo-text"
+              >
+                KhoTaiLieu
+              </Typography>
             </Link>
           </Typography>
 
-          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+          {/* <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
             {user === undefined ? (
               <HourglassBottomIcon />
             ) : user === null ? (
@@ -335,9 +335,11 @@ export default function Header(props) {
                 <Avatar alt={user.displayName} src={user.photoURL} />
               </IconButton>
             )}
-          </Box>
+          </Box> */}
+          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" }, width:"48px" }}></Box>
 
-          {user && (
+          {/*
+           {user && (
             <Menu
               sx={{ mt: "45px", rigth: "50px" }}
               anchorEl={anchorElUser}
@@ -357,22 +359,22 @@ export default function Header(props) {
                 <Typography textAlign="center">{user.displayName}</Typography>
               </MenuItem>
               <Link href="/share">
-                  <MenuItem>
-                    <Typography
-                      textAlign="center"
-                      sx={{
-                        color: "grey.dark",
-                      }}
-                    >
-                      Chia sẻ tài liệu
-                    </Typography>
-                  </MenuItem>
+                <MenuItem>
+                  <Typography
+                    textAlign="center"
+                    sx={{
+                      color: "grey.dark",
+                    }}
+                  >
+                    Chia sẻ tài liệu
+                  </Typography>
+                </MenuItem>
               </Link>
               <MenuItem onClick={() => Logout()}>
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>
             </Menu>
-          )}
+          )} */}
         </Toolbar>
       </Container>
       <Drawer open={drawer} variant="temporary" onClose={toggleDrawer(false)}>

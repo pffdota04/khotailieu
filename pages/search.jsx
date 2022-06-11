@@ -51,8 +51,11 @@ const LetSearch = (props) => {
       type: URLSearch.get("type"),
       category: URLSearch.get("category"),
     };
+    setType(nowParams.type);
+    setCategory(nowParams.category);
+    setSearchFor(nowParams.keyword);
+    setSearchText(nowParams.keyword);
     SerearchParams(nowParams);
-    setSearchFor(URLSearch.get("keyword"));
 
     if (
       nowParams.keyword == "" ||
@@ -62,30 +65,37 @@ const LetSearch = (props) => {
       // router.push("404");
       alert(nowParams.keyword);
     else {
-      const url =
-        `https://hcmute.netlify.app/api/search?keyword=` +
-        encodeURIComponent(nowParams.keyword) +
-        `&type=` +
-        encodeURIComponent(nowParams.type) +
-        `&category=` +
-        encodeURIComponent(nowParams.category);
-      const searchResulf = await axios.get(url);
-
-      setData(searchResulf.data);
-      if (searchResulf.data.length < 6) setHasMore(false);
-      let infoResult = [];
-      Promise.all(
-        searchResulf.data.slice(0, 6).map(async (e) => {
-          infoResult.push(
-            (await axios.get(window.location.origin + `/api/info/` + e.id)).data
-          );
-        })
-      )
-        .then(() => {
-          setDataInfo(infoResult);
-          setLoadingInfo(false);
-        })
-        .catch(() => setLoadingInfo(false));
+      try {
+        const url =
+          `https://hcmute.netlify.app/api/search?keyword=` +
+          encodeURIComponent(nowParams.keyword) +
+          `&type=` +
+          encodeURIComponent(nowParams.type) +
+          `&category=` +
+          encodeURIComponent(nowParams.category);
+        const searchResulf = await axios.get(url);
+        setData(searchResulf.data);
+        if (searchResulf.data.length < 6) setHasMore(false);
+        let infoResult = [];
+        Promise.all(
+          searchResulf.data.slice(0, 6).map(async (e) => {
+            infoResult.push(
+              (await axios.get(window.location.origin + `/api/info/` + e.id))
+                .data
+            );
+          })
+        )
+          .then(() => {
+            setDataInfo(infoResult);
+            setLoadingInfo(false);
+          })
+          .catch(() => setLoadingInfo(false));
+      } catch (error) {
+        console.error(error);
+        setDataInfo([]);
+        setData([]);
+        setLoadingInfo(false);
+      }
     }
   };
 
@@ -180,7 +190,7 @@ const LetSearch = (props) => {
 
   return (
     <div style={{ paddingTop: "66px" }} className={style.search}>
-      {/* <Head>
+      <Head>
         <title key="title">Tìm tài liệu tại KhoTaiLieu </title>
         <meta name="description" content="Some Page Description" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -190,7 +200,7 @@ const LetSearch = (props) => {
           property="og:description"
           content={"Tìm kiếm tài liệu tại KhoTaiLieu"}
         />
-      </Head> */}
+      </Head>
       <Box textAlign="center">
         <Typography
           variant="h4"
