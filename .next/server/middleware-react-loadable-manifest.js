@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST={"search.jsx -> next/image":{"id":"search.jsx -> next/image","files":["static/chunks/node_modules_next_image_js.js"]}}
+self.__REACT_LOADABLE_MANIFEST={}

@@ -1,15 +1,39 @@
 // import * as data from "../../data/keyword.json";
 import runMiddleware from "./../../lib/cors";
+import admin from "./../../services/admin/index";
 
 export default async function personHandler(req, res) {
   var startTime = Date.now();
   await runMiddleware(req, res, ["GET"]);
-  let data = require("../../data/keyword.json");
+  let data;
+  // = require("../../data/keyword.json");
   const { keyword, type, category } = req.query;
   try {
     if (!keyword || !type || !category) throw "Some query is undefine!";
     let filtered = [];
     console.log("API: " + keyword + ", " + type + ", " + category);
+
+    data = (await admin.database().ref().child("keyword").once("value")).val();
+    // let x = await admin
+    //   .firestore()
+    //   .collection("keyword")
+    //   .orderBy("id", "desc")
+    //   .get();
+    // x.forEach((doc) => {
+    //   console.log(doc.data());
+    // });
+    //////////////////////
+    // data.map((e) => {
+    //   if (e !== null)
+    //     admin
+    //       .firestore()
+    //       .collection("keyword")
+    //       .doc(e.id)
+    //       .set(e)
+    //       .then(() => console.log("OK " + e.id))
+    //       .catch((e) => console.log(e));
+    // });
+
     if (type == "all") {
       if (category == "all")
         filtered = data.filter((p) =>
@@ -35,7 +59,6 @@ export default async function personHandler(req, res) {
             p.filter.includes(category)
         );
     }
-    console.log("API: Data response lenght: " + filtered.length);
     var endTime = Date.now();
     console.log(`API: Took ${endTime - startTime} milliseconds`);
 
