@@ -56,11 +56,12 @@ const LetSearch = (props) => {
 
     if (
       nowParams.keyword == "" ||
+      nowParams.keyword == " " ||
       nowParams.keyword == null ||
       nowParams.keyword == undefined
     )
       // router.push("404");
-      alert(nowParams.keyword);
+      alert("Không tìm thấy kết quả nào");
     else {
       try {
         const url =
@@ -100,7 +101,6 @@ const LetSearch = (props) => {
     if (!init) {
       searching(searchText);
     }
-    setInit(false);
   }, [selectCategory, selectType]);
 
   const handleChangeType = (event) => {
@@ -163,6 +163,8 @@ const LetSearch = (props) => {
         setLoadingInfo(false);
       }
     setSearchFor(value);
+    setInit(false);
+
   };
 
   const fetchMoreData = async () => {
@@ -206,8 +208,7 @@ const LetSearch = (props) => {
           alignItems="center"
           p={1}
         >
-          Kết quả tìm kiếm cho <strong>{searchFor}</strong> 
-          {selectCategory}
+          Kết quả tìm kiếm cho <strong>{searchFor}</strong>
         </Typography>
       </Box>
 

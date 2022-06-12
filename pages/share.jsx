@@ -70,6 +70,7 @@ const Share = () => {
   const [links, setLinks] = useState([{ type: "drive", desc: "", link: "" }]);
 
   const [countCheck, setCountCheck] = useState(0);
+  const [waitSend, setWaitSend] = useState(false);
   const theme = useTheme();
 
   const handleChange = (event) => {
@@ -89,6 +90,7 @@ const Share = () => {
           return;
         }
       });
+      setWaitSend(true);
       axios({
         method: "post",
         url: window.location.origin + `/api/pending`,
@@ -99,9 +101,11 @@ const Share = () => {
       })
         .then((response) => {
           setCountCheck(-1);
+          setWaitSend(false);
         })
         .catch((e) => {
           setCountCheck(-2);
+          setWaitSend(false);
         });
     }
   };
@@ -386,7 +390,9 @@ const Share = () => {
             p: 4,
           }}
         >
-          {countCheck == -1 ? (
+          {waitSend ? (
+            "Chờ một tí..."
+          ) : countCheck == -1 ? (
             <>
               <Alert variant="filled" severity="success" m={1} sx={{ m: 1 }}>
                 Chia sẽ sẽ được xét duyệt trước khi xuất bản, cảm ơn bạn nhiều!

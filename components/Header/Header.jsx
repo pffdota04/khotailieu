@@ -156,6 +156,7 @@ export default function Header(props) {
               <Typography
                 sx={{
                   color: "grey.light",
+                  cursor: "pointer",
                 }}
                 id="logo-text"
               >
@@ -201,6 +202,7 @@ export default function Header(props) {
               noWrap
               sx={{
                 marginLeft: "20px",
+                cursor: "pointer",
               }}
             >
               <Link href="/share">
@@ -211,7 +213,7 @@ export default function Header(props) {
                     display: "block",
                     textTransform: "inherit",
                     alignItems: "center",
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                 >
                   Chia sẻ tài liệu
@@ -303,6 +305,7 @@ export default function Header(props) {
               <Typography
                 sx={{
                   color: "grey.light",
+                  cursor: "pointer",
                 }}
                 id="logo-text"
               >
