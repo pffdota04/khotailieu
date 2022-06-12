@@ -1,13 +1,14 @@
 import runMiddleware from "../../../lib/cors";
 import admin from "./../../../services/admin/index";
 export default async function personHandler(req, res) {
+  console.log("POST INFO");
   await runMiddleware(req, res, ["POST", "GET"]);
   let messagesRef = admin.database().ref();
   const { method } = req;
   switch (method) {
     case "POST": {
       const last = await getLast(messagesRef);
-      const body = JSON.parse(req.body);
+      const body = req.body;
       const newId = parseInt(last.id) + 1 + "";
       const token = req.headers.authorization;
       console.log(token);
@@ -19,9 +20,12 @@ export default async function personHandler(req, res) {
             if (decodeToken.email == "pffdota04@gmail.com") {
               if (body.pending === undefined) {
                 console.log("POST NEW");
-                const keyword = body.name + " " + body.author + " ";
-                body.date;
-                await setNewInfo(messagesRef, body, newId, keyword);
+                const keyword = body.info.name + " " + body.info.author + " ";
+
+                await setNewInfo(messagesRef, body, newId, keyword.toLowerCase());
+                if (body.fromPending)
+                  messagesRef.child("pending").child(body.fromPending).remove();
+
                 res.status(200).json({
                   message: `Post to info success! New id is ${newId}`,
                 });
@@ -44,6 +48,9 @@ export default async function personHandler(req, res) {
                   newId,
                   keyword.toLowerCase()
                 );
+
+                messagesRef.child("pending").child(keyPending).remove();
+
                 res.status(200).json({
                   message: `Post to info success! New id is ${newId}`,
                 });
@@ -56,7 +63,9 @@ export default async function personHandler(req, res) {
           })
           .catch((error) => {
             console.log(error);
-            res.status(404).json({ message: `POST failed: Token not true` });
+            res.status(404).json({
+              message: `POST failed: Token not true  or you not admin`,
+            });
           });
       } catch (error) {
         console.log(error);
@@ -97,7 +106,7 @@ const setNewInfo = async (messRef, body, newID, keyword) => {
       .set({
         keyword: keyword,
         id: newID,
-        filter: body.info.category + " " + body.info.type,
+        filter: body.info.major + " " + body.info.type,
       });
     return true;
   } catch (error) {

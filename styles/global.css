@@ -5,6 +5,11 @@
   font-family: "Abril Fatface", cursive;
 }
 
+.pointer{
+  cursor: pointer;
+
+}
+
 html,
 body,
 body div,

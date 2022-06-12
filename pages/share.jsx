@@ -1,5 +1,3 @@
-// firebase
-
 import { useEffect, useState } from "react";
 import {
   Chip,
@@ -95,7 +93,7 @@ const Share = () => {
         method: "post",
         url: window.location.origin + `/api/pending`,
         data: {
-          info: { ...info, type: type, category: category, include: includes },
+          info: { ...info, type: type, major: category, include: includes },
           detail: links,
         },
       })

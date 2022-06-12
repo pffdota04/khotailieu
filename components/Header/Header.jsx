@@ -211,6 +211,7 @@ export default function Header(props) {
                     display: "block",
                     textTransform: "inherit",
                     alignItems: "center",
+                    cursor: "pointer"
                   }}
                 >
                   Chia sẻ tài liệu
@@ -336,7 +337,13 @@ export default function Header(props) {
               </IconButton>
             )}
           </Box> */}
-          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" }, width:"48px" }}></Box>
+          <Box
+            sx={{
+              flexGrow: 0,
+              display: { xs: "flex", md: "none" },
+              width: "48px",
+            }}
+          ></Box>
 
           {/*
            {user && (

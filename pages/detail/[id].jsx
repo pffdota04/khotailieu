@@ -148,8 +148,8 @@ const Detail = (props) => {
                     )}
                   </Box>
                   <Box sx={{ color: "text.secondary" }}>
-                    Trạng thái:{" "}
-                    {e.status ? (
+                    Trạng thái:{" "} 
+                    {props.info.status ? (
                       <GppGoodIcon color="primary" />
                     ) : (
                       <GppBadIcon color="danger" />

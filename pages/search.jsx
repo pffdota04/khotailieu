@@ -18,9 +18,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Head from "next/head";
 import Hori1 from "./../assets/images/hori.png";
-const Image = dynamic(() => import("next/image"), {
-  ssr: false,
-});
+import Image from "next/image";
 const LetSearch = (props) => {
   const router = useRouter();
   const [searchParams, SerearchParams] = useState({
@@ -54,7 +52,6 @@ const LetSearch = (props) => {
     setType(nowParams.type);
     setCategory(nowParams.category);
     setSearchFor(nowParams.keyword);
-    setSearchText(nowParams.keyword);
     SerearchParams(nowParams);
 
     if (
@@ -209,7 +206,8 @@ const LetSearch = (props) => {
           alignItems="center"
           p={1}
         >
-          Kết quả tìm kiếm cho <strong>{searchFor}</strong>
+          Kết quả tìm kiếm cho <strong>{searchFor}</strong> 
+          {selectCategory}
         </Typography>
       </Box>
 
@@ -247,13 +245,21 @@ const LetSearch = (props) => {
               value={selectType}
               onChange={handleChangeType}
             >
-              <MenuItem value="all">
+              <MenuItem value="all" selected={selectType === "all"}>
                 <em>All </em>
               </MenuItem>
-              <MenuItem value="docs">Tài liệu</MenuItem>
-              <MenuItem value="project">Đồ án</MenuItem>
-              <MenuItem value="exam">Đề thi</MenuItem>
-              <MenuItem value="report">Tiểu luận</MenuItem>
+              <MenuItem value="docs" selected={selectType === "docs"}>
+                Tài liệu
+              </MenuItem>
+              <MenuItem value="project" selected={selectType === "project"}>
+                Đồ án
+              </MenuItem>
+              <MenuItem value="exam" selected={selectType === "exam"}>
+                Đề thi
+              </MenuItem>
+              <MenuItem value="report" selected={selectType === "project"}>
+                Tiểu luận
+              </MenuItem>
             </TextField>
           </Grid>
           <Grid item sm={3} xs={6}>
