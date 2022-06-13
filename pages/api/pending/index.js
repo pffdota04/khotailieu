@@ -43,18 +43,20 @@ export default async function personHandler(req, res) {
                 console.log(error);
                 res.status(500).json({ message: `Add pending error.` });
               }
-            }
+            } else
+              res
+                .status(401)
+                .json({ message: `Token not true or you are not admin` });
           });
-        beark;
+        break;
       }
       default:
         res.setHeader("Allow", ["POST", "GET"]);
         res.status(405).end(`Method ${method} Not Allowed`);
-        beark;
+        break;
     }
   } catch (error) {
-    res
-      .status(404)
-      .json({ message: `Failed: Token not true or you not admin` });
+    console.log(error);
+    res.status(500).json({ message: `errror` });
   }
 }

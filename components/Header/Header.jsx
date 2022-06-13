@@ -160,7 +160,7 @@ export default function Header(props) {
                 }}
                 id="logo-text"
               >
-                KhoTaiLieu
+                UTEshare
               </Typography>
             </Link>
           </Typography>
@@ -309,7 +309,7 @@ export default function Header(props) {
                 }}
                 id="logo-text"
               >
-                KhoTaiLieu
+                UTEshare
               </Typography>
             </Link>
           </Typography>

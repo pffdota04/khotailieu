@@ -190,14 +190,13 @@ const LetSearch = (props) => {
   return (
     <div style={{ paddingTop: "66px" }} className={style.search}>
       <Head>
-        <title key="title">Tìm tài liệu tại KhoTaiLieu </title>
-        <meta name="description" content="Some Page Description" />
+        <title key="title">Tìm tài liệu tại UTEshare </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="google" content="notranslate" />
-        <meta name="description" content={"Tìm kiếm tài liệu tại KhoTaiLieu"} />
+        <meta name="description" content={"Tìm kiếm tài liệu tại UTEshare"} />
         <meta
           property="og:description"
-          content={"Tìm kiếm tài liệu tại KhoTaiLieu"}
+          content={"Tìm kiếm tài liệu tại UTEshare"}
         />
       </Head>
       <Box textAlign="center">

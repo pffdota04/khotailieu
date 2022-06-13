@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import NProgress from "nprogress";
 import Router from "next/router";
 import "./../styles/nprocess.css";
+import Head from "next/head";
 
 Router.onRouteChangeStart = () => {
   NProgress.start();
@@ -48,6 +49,10 @@ export default function MyApp({ Component, pageProps }) {
   });
   return (
     <div>
+      <Head>
+        <link rel="icon" href="svgviewer-output.ico" />
+        <link rel="shortcut icon" href="/svgviewer-output.ico" />
+      </Head>
       <ThemeProvider theme={theme}>
         <Header />
         <Component {...pageProps} />

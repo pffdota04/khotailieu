@@ -34,19 +34,19 @@ export default function IndexPage() {
   return (
     <div style={{ background: "#000000" }}>
       <Head>
-        <title key="title">Trang chủ KhoTailLieu</title>
+        <title key="title">Trang chủ UTEshare</title>
         <meta
           name="description"
-          content="Chia sẽ tài liệu, đồ án, đề thi, tiểu luận hoàn toàn miễn phí. Cùng nhau chia sẽ, học tập và qua môn!"
+          content="UTEshare - Chia sẽ tài liệu, đồ án, đề thi, tiểu luận hoàn toàn miễn phí. Cùng nhau chia sẽ, học tập và qua môn!"
         />
         <meta
           property="og:description"
-          content="Chia sẽ tài liệu, đồ án, đề thi, tiểu luận hoàn toàn miễn phí. Cùng nhau chia sẽ, học tập và qua môn!"
+          content="UTEshare - Chia sẽ tài liệu, đồ án, đề thi, tiểu luận hoàn toàn miễn phí. Cùng nhau chia sẽ, học tập và qua môn!"
         />
-        
+
         <meta
           name="keywords"
-          content="KHOTAILIEU, khotailieu, đồ án, tiểu luận, tài liệu, đề thi, hcmute, chia sẽ"
+          content="UTEshare, ute, share, đồ án, tiểu luận, tài liệu, đề thi, hcmute, chia sẽ"
         />
 
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -99,7 +99,6 @@ export default function IndexPage() {
                 id="outlined-select-currency-native"
                 label="Loại"
                 select
-                
                 value={type}
                 onChange={handleChangeType}
                 onFocus={() => setOnActive(true)}
@@ -121,7 +120,7 @@ export default function IndexPage() {
                 id="outlined-select-currency-native"
                 label="Lĩnh vực"
                 select
-                  value={category}
+                value={category}
                 onChange={handleChangeCategory}
                 onFocus={() => setOnActive(true)}
               >

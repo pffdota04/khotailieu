@@ -11,7 +11,6 @@ export default async function personHandler(req, res) {
       const body = req.body;
       const newId = parseInt(last.id) + 1 + "";
       const token = req.headers.authorization;
-      console.log(token);
       try {
         admin
           .auth()
@@ -22,7 +21,12 @@ export default async function personHandler(req, res) {
                 console.log("POST NEW");
                 const keyword = body.info.name + " " + body.info.author + " ";
 
-                await setNewInfo(messagesRef, body, newId, keyword.toLowerCase());
+                await setNewInfo(
+                  messagesRef,
+                  body,
+                  newId,
+                  keyword.toLowerCase()
+                );
                 if (body.fromPending)
                   messagesRef.child("pending").child(body.fromPending).remove();
 
@@ -75,11 +79,26 @@ export default async function personHandler(req, res) {
     }
     case "GET": {
       try {
-        const last = await getLast(messagesRef);
-        res.status(200).json(last);
+        const token = req.headers.authorization;
+        admin
+          .auth()
+          .verifyIdToken(token)
+          .then(async (decodeToken) => {
+            if (decodeToken.email == "pffdota04@gmail.com") {
+              const all = await messagesRef.child("info").once("value");
+              res.status(200).json(all);
+            } else
+              res
+                .status(404)
+                .json({ message: `GET failed: You are not admin` });
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(404).json({ message: `Info  not found.` });
+          });
       } catch (error) {
         console.log(error);
-        res.status(404).json({ message: `Info by  not found.` });
+        res.status(404).json({ message: `POST failed` });
       }
       break;
     }

@@ -144,9 +144,7 @@ const LetSearch = (props) => {
   return (
     <div style={{ paddingTop: "66px" }} className={style.search}>
       <Head>
-        <title key="title">
-          Tìm tài liệu tại KhoTaiLieu
-        </title>
+        <title key="title">Tìm tài liệu tại UTEshare</title>
         <meta name="description" content="Some Page Description" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="google" content="notranslate" />

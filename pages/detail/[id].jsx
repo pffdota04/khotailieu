@@ -33,6 +33,7 @@ import Link from "next/link";
 
 import share from "./../../assets/images/share.png";
 import Image from "next/image";
+import Head from "next/head";
 const Detail = (props) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -64,9 +65,39 @@ const Detail = (props) => {
   };
   return (
     <div style={{ paddingTop: "66px" }} className={style.detail}>
+      <Head>
+        <title key="title">{props.info?.name} tại UTEshare</title>
+        <meta
+          name="description"
+          content={
+            "Xem tài liệu " +
+            props.info?.name +
+            " tại UTEshare. Nơi chia sẻ tài liệu, đồ án, tiểu luận cho sinh viên HCMUTE!"
+          }
+        />
+        <meta
+          property="og:description"
+          content={
+            "Xem tài liệu " +
+            props.info?.name +
+            " tại UTEshare. Nơi chia sẻ tài liệu, đồ án, tiểu luận cho sinh viên HCMUTE!"
+          }
+        />
+
+        <meta
+          name="keywords"
+          content={
+            "UTEshare, ute, hcmute, share, đồ án, tiểu luận, tài liệu, đề thi, hcmute, chia sẽ, " +
+            props.info?.name
+          }
+        />
+
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="google" content="notranslate" />
+      </Head>
       <Container>
         <Typography variant="h3" textAlign="center">
-          {props.info.name}
+          {props.info?.name}
         </Typography>
 
         <Grid container spacing={1}>
@@ -75,14 +106,14 @@ const Detail = (props) => {
               <CardContent>
                 <Box>
                   {renderIcon(
-                    Object.keys(convertType).indexOf(props.info.type)
+                    Object.keys(convertType).indexOf(props.info?.type)
                   )}{" "}
                   <Typography
                     sx={{ fontSize: 14 }}
                     color="text.secondary"
                     display="inline-block"
                   >
-                    {convertType[props.info.type]}
+                    {convertType[props.info?.type]}
                   </Typography>
                 </Box>
                 <Typography
@@ -90,21 +121,21 @@ const Detail = (props) => {
                   color="text.secondary"
                   gutterBottom
                 >
-                  Uploadby: {props.info.author}
+                  Uploadby: {props.info?.author}
                 </Typography>
                 <Typography
                   sx={{ fontSize: 14 }}
                   color="text.secondary"
                   gutterBottom
                 >
-                  Date: {props.info.date}
+                  Date: {props.info?.date}
                 </Typography>
                 <Typography
                   sx={{ fontSize: 14 }}
                   color="text.secondary"
                   gutterBottom
                 >
-                  Chuyên mục: {props.info.major}
+                  Chuyên mục: {props.info?.major}
                 </Typography>
 
                 <Typography
@@ -112,11 +143,11 @@ const Detail = (props) => {
                   color="text.secondary"
                   gutterBottom
                 >
-                  View: {props.info.view}
+                  View: {props.info?.view}
                 </Typography>
                 <Box sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                   Bao gồm:{" "}
-                  {props.info.include.map((e, i) => (
+                  {props.info?.include.map((e, i) => (
                     <MyChip type={e} sx={{ m: "1px" }} key={i} />
                   ))}
                 </Box>
@@ -124,7 +155,7 @@ const Detail = (props) => {
             </Card>
           </Grid>
           <Grid item sm={6} xs={12}>
-            {props.data.data.map((e, i) => (
+            {props.data?.data.map((e, i) => (
               <Accordion
                 key={i}
                 expanded={expanded === "panel" + i}
@@ -148,8 +179,8 @@ const Detail = (props) => {
                     )}
                   </Box>
                   <Box sx={{ color: "text.secondary" }}>
-                    Trạng thái:{" "} 
-                    {props.info.status ? (
+                    Trạng thái:{" "}
+                    {props.info?.status ? (
                       <GppGoodIcon color="primary" />
                     ) : (
                       <GppBadIcon color="danger" />

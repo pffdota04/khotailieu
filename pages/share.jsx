@@ -120,11 +120,11 @@ const Share = () => {
         <meta name="google" content="notranslate" />
         <meta
           name="description"
-          content="Chia sẽ tài liệu của bạn, cho những người khốn khổ một lần nữa có niềm tin vào sự tươi đẹp của cuộc sống."
+          content="Chia sẽ tài liệu của bạn, cho những người khốn khổ một lần nữa có niềm tin vào sự tươi đẹp của cuộc sống. UTEshare"
         />
         <meta
           property="og:description"
-          content="Chia sẽ tài liệu của bạn, cho những người khốn khổ một lần nữa có niềm tin vào sự tươi đẹp của cuộc sống."
+          content="Chia sẽ tài liệu của bạn, cho những người khốn khổ một lần nữa có niềm tin vào sự tươi đẹp của cuộc sống. UTEshare"
         />
       </Head>
       <Grid container columns={24} m={0} alignItems="flex-start">

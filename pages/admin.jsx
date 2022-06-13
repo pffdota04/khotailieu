@@ -75,8 +75,8 @@ const Admin = () => {
   const [select, setSelect] = useState(null);
   const [selectKey, setSelectKey] = useState(null);
   const theme = useTheme();
-
   const router = useRouter();
+
   useEffect(() => {
     auth.onAuthStateChanged((currentUser) => {
       console.log(currentUser);
@@ -96,7 +96,7 @@ const Admin = () => {
   }, []);
 
   const getPending = async (idTokenResult) => {
-    let a = await axios.get("https://hcmute.netlify.app/api/pending", {
+    let a = await axios.get("https://hcmute.netlify.app/api/info", {
       headers: { Authorization: idTokenResult },
     });
     setData(Object.values(a.data));
@@ -112,11 +112,9 @@ const Admin = () => {
     setSelect((prev) => ({ ...prev, info: a }));
   };
 
-  const postInfo = async () => {
-    const res = await axios.post(
-      "https://hcmute.netlify.app/api/info",
-      // { pending: selectKey },
-      { ...select, fromPending: selectKey},
+  const deleteInfo = async () => {
+    const res = await axios.delete(
+      "https://hcmute.netlify.app/api/info/" + selectKey,
       {
         headers: { Authorization: userToken },
       }
@@ -153,9 +151,9 @@ const Admin = () => {
                           setSelectKey(key[i]);
                         }}
                       >
-                        <TableCell align="right">{row.info.author}</TableCell>
-                        <TableCell align="right">{row.info.name}</TableCell>
-                        <TableCell align="right">{row.info.major}</TableCell>
+                        <TableCell align="right">{row.author}</TableCell>
+                        <TableCell align="right">{row.name}</TableCell>
+                        <TableCell align="right">{row.major}</TableCell>
                         <TableCell align="right">{row.date}</TableCell>
                       </TableRow>
                     ))}
@@ -175,24 +173,14 @@ const Admin = () => {
                     <TextField
                       label="Tên tác giả"
                       fullWidth
-                      value={select.info.author}
-                      onChange={(e) => {
-                        let a = { ...select };
-                        a.info.author = e.target.value;
-                        setSelect(a);
-                      }}
+                      value={select.author}
                     />
                   </Grid>
                   <Grid item xs={6} p={1}>
                     <TextField
                       label="Tên tài liệu"
                       fullWidth
-                      value={select.info.name}
-                      onChange={(e) => {
-                        let a = { ...select };
-                        a.info.name = e.target.value;
-                        setSelect(a);
-                      }}
+                      value={select.name}
                     />
                   </Grid>
                   <Grid item xs={6} p={1}>
@@ -201,12 +189,7 @@ const Admin = () => {
                       label="Lĩnh vực"
                       fullWidth
                       select
-                      value={select.info.major}
-                      onChange={(e) => {
-                        let a = { ...select.info };
-                        a.major = e.target.value;
-                        setSelect((prev) => ({ ...prev, info: a }));
-                      }}
+                      value={select.major}
                     >
                       <MenuItem value="Công nghệ thông tin">
                         Công nghệ thông tin
@@ -235,8 +218,8 @@ const Admin = () => {
                           labelId="demo-multiple-chip-label"
                           id="demo-multiple-chip"
                           multiple
-                          value={select.info.include}
-                          onChange={handleChange}
+                          value={Object.values(select.include)}
+                          // onChange={handleChange}
                           variant="outlined"
                           input={
                             <OutlinedInput
@@ -265,7 +248,7 @@ const Admin = () => {
                               value={name}
                               style={getStyles(
                                 name,
-                                select.info.include,
+                                Object.values(select.include),
                                 theme
                               )}
                             >
@@ -275,117 +258,14 @@ const Admin = () => {
                         </Select>
                       </FormControl>
                     </Box>
-                    {select.info.include.length > 0 && (
-                      <Box alignItems="center" display="flex">
-                        <ClearIcon
-                          onClick={() =>
-                            setSelect((prev) => {
-                              let a = { ...prev.info };
-                              a.include = [];
-                              return { ...prev, info: a };
-                            })
-                          }
-                        />
-                      </Box>
-                    )}
                   </Grid>
-                  {select.detail.map((el, i) => (
-                    <>
-                      <Grid
-                        item
-                        xs={12}
-                        p={1}
-                        sx={{
-                          display: "flex",
-                          backgroundColor: "grey.main",
-                          marginBottom: 1,
-                        }}
-                      >
-                        <Typography
-                          variant="caption"
-                          gutterBottom
-                          sx={{ flexGrow: 0, display: "flex" }}
-                        >
-                          Link thứ {i + 1}
-                        </Typography>
-                        {i !== 0 && (
-                          <Box
-                            alignItems="center"
-                            sx={{ flexGrow: 1, display: "flex" }}
-                          >
-                            <ClearIcon
-                              onClick={() => {
-                                const copy = [...select.detail];
-                                copy.splice(i, 1);
-                                setSelect((prev) => ({
-                                  ...prev,
-                                  detail: copy,
-                                }));
-                              }}
-                              sx={{ marginLeft: "auto" }}
-                            />
-                          </Box>
-                        )}
-                      </Grid>
-                      <Grid item xs={6} p={1}>
-                        <TextField
-                          id="outlined-select-currency-native"
-                          label="Đây là link gì?"
-                          select
-                          fullWidth
-                          value={el.type}
-                          onChange={(e) => {
-                            const copy = [...select.detail];
-                            copy[i].type = e.target.value;
-                            setSelect((prev) => ({ ...prev, detail: copy }));
-                          }}
-                        >
-                          <MenuItem value="drive">Google Drive</MenuItem>
-                          <MenuItem value="youtube">Youtube</MenuItem>
-                          <MenuItem value="web">Link trang web</MenuItem>
-                          <MenuItem value="github">Github</MenuItem>
-                          <MenuItem value="imgur">Imgur</MenuItem>
-                          <MenuItem value="1drive">One Drive</MenuItem>
-                          <MenuItem value="dropBox">DropBox</MenuItem>
-                          <MenuItem value="orther">Khác...</MenuItem>
-                        </TextField>
-                      </Grid>
-                      <Grid item xs={6} p={1}>
-                        <TextField
-                          label="Mô tả ngắn"
-                          fullWidth
-                          onChange={(e) => {
-                            const copy = [...select.detail];
-                            copy[i].desc = e.target.value;
-                            setSelect((prev) => ({ ...prev, detail: copy }));
-                          }}
-                          value={el.desc}
-                        />
-                      </Grid>
-                      <Grid item xs={12} p={1}>
-                        <TextField
-                          label="Link"
-                          fullWidth
-                          value={el.link}
-                          onChange={(e) => {
-                            const copy = [...select.detail];
-                            copy[i].link = e.target.value;
-                            setSelect((prev) => ({ ...prev, detail: copy }));
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={12} p={1}>
-                        <Divider variant="middle" />
-                      </Grid>
-                    </>
-                  ))}
                 </Grid>
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
-                  <Button variant="contained" onClick={() => postInfo()}>
-                    Add
+                  <Button variant="contained" onClick={() => deleteInfo()}>
+                    delete
                   </Button>
                 </Box>
-                {JSON.stringify(select)}
+                {selectKey} | view:{select.view} | {select.status}
               </Paper>
             )}
           </>
